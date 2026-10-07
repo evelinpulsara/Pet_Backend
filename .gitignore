@@ -1,3 +1,8 @@
 # macOS
 .DS_Store
 
+# Credenciales: NUNCA subir el archivo real
+application.properties
+src/main/resources/application.properties
+.env
+
