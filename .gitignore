@@ -6,3 +6,12 @@ application.properties
 src/main/resources/application.properties
 .env
 
+# Maven / Java
+target/
+*.class
+*.log
+
+# IDE
+.idea/
+*.iml
+.vscode/
