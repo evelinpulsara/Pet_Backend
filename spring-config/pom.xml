@@ -66,3 +66,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Flyway — Migraciones controladas de BD -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+        </dependency>
+
