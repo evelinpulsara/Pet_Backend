@@ -1,0 +1,15 @@
+# ============================================================
+#  application.properties — Sistema de Rastreo de Mascotas con IA
+#  Spring Boot 3.3.x | Java 21
+# ============================================================
+# INSTRUCCIONES:
+#  1. Copia este archivo a src/main/resources/application.properties
+#  2. AGREGA application.properties a tu .gitignore (¡nunca subir credenciales!)
+#  3. Reemplaza los valores ${VAR:default} con tus datos reales
+#     O mejor: define las variables de entorno en tu sistema / servicio cloud.
+# ============================================================
+
+# ---- Servidor ----
+server.port=${PORT:8080}
+server.servlet.context-path=/api/v1
+
