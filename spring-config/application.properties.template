@@ -33,3 +33,16 @@ spring.datasource.hikari.max-lifetime=1800000
 spring.datasource.hikari.keepalive-time=60000
 spring.datasource.hikari.connection-test-query=SELECT 1
 
+# ---- JPA / Hibernate ----
+# 'validate' : solo verifica que el esquema exista (para producción)
+# 'update'   : modifica el esquema automáticamente (solo desarrollo)
+# NUNCA uses 'create' o 'create-drop' si ya tienes datos reales
+spring.jpa.hibernate.ddl-auto=${JPA_DDL:validate}
+spring.jpa.show-sql=${JPA_SHOW_SQL:false}
+spring.jpa.open-in-view=false
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.jdbc.time_zone=UTC
+spring.jpa.properties.hibernate.format_sql=false
+# PostGIS — descomenta si usas el tipo GEOGRAPHY en tu esquema
+# spring.jpa.properties.hibernate.spatial.enabled=true
+
