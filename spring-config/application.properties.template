@@ -13,3 +13,13 @@
 server.port=${PORT:8080}
 server.servlet.context-path=/api/v1
 
+# ---- Base de Datos PostgreSQL ----
+# Neon (recomendado gratuito): postgresql://user:pass@ep-xxxxx.us-east-2.aws.neon.tech/pettracker?sslmode=require
+# Supabase:                     postgresql://postgres:pass@db.xxxxxx.supabase.co:5432/postgres
+# Local:                        localhost:5432
+
+spring.datasource.url=jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:pet_tracker_db}?sslmode=${DB_SSL_MODE:prefer}
+spring.datasource.username=${DB_USERNAME:postgres}
+spring.datasource.password=${DB_PASSWORD:}
+spring.datasource.driver-class-name=org.postgresql.Driver
+
