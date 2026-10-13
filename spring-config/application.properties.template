@@ -78,3 +78,19 @@ app.rls.setting-key=app.current_user_id
 app.storage.provider=${STORAGE_PROVIDER:local}   # 'local', 'cloudinary', 'supabase'
 app.storage.base-url=${STORAGE_BASE_URL:http://localhost:8080/uploads}
 
+# ---- Actuator (monitoreo) ----
+management.endpoints.web.exposure.include=${ACTUATOR_ENDPOINTS:health,info}
+management.endpoint.health.show-details=when-authorized
+management.info.env.enabled=true
+
+# ---- CORS (para conectar con tu frontend) ----
+app.cors.allowed-origins=${CORS_ORIGINS:http://localhost:3000,http://localhost:4200}
+app.cors.allowed-methods=GET,POST,PUT,PATCH,DELETE,OPTIONS
+app.cors.max-age=3600
+
+# ---- Logging ----
+logging.level.root=WARN
+logging.level.com.tuuniversidad=INFO
+logging.level.org.springframework.security=WARN
+# En desarrollo, activa SQL logging:
+# logging.level.org.hibernate.SQL=DEBUG
