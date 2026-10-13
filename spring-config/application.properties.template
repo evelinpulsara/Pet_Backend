@@ -67,3 +67,14 @@ app.jwt.refresh-token-expiration-ms=${JWT_REFRESH_EXPIRATION_MS:604800000}  # 7 
 # Factor de costo 12 = ~250ms por hash (balance entre seguridad y rendimiento)
 app.security.bcrypt-strength=${BCRYPT_STRENGTH:12}
 
+# ---- Row Level Security (PostgreSQL) ----
+# La app debe configurar esto al inicio de cada sesión JDBC.
+# Se implementa en un Interceptor o AOP antes de cada operación.
+app.rls.setting-key=app.current_user_id
+
+# ---- Almacenamiento de imágenes (mascotas/fotos) ----
+# No guardes imágenes en la base de datos. Usa un servicio externo.
+# Opciones gratuitas (académico): Cloudinary free tier, Supabase Storage
+app.storage.provider=${STORAGE_PROVIDER:local}   # 'local', 'cloudinary', 'supabase'
+app.storage.base-url=${STORAGE_BASE_URL:http://localhost:8080/uploads}
+
