@@ -44,3 +44,8 @@ CREATE TABLE users (
         email ~* '^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$'
     )
 );
+
+COMMENT ON TABLE  users               IS 'Usuarios registrados. Propietarios de mascotas.';
+COMMENT ON COLUMN users.password_hash IS 'Hash BCrypt (costo ≥ 12). NUNCA almacenar contraseña en texto plano.';
+COMMENT ON COLUMN users.is_verified   IS 'TRUE cuando el usuario confirma su correo electrónico.';
+
