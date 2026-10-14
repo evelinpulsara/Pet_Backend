@@ -49,3 +49,21 @@ COMMENT ON TABLE  users               IS 'Usuarios registrados. Propietarios de 
 COMMENT ON COLUMN users.password_hash IS 'Hash BCrypt (costo ≥ 12). NUNCA almacenar contraseña en texto plano.';
 COMMENT ON COLUMN users.is_verified   IS 'TRUE cuando el usuario confirma su correo electrónico.';
 
+-- ====================================================================
+--  TABLA: refresh_tokens
+--  Tokens de renovación JWT para sesiones persistentes.
+-- ====================================================================
+CREATE TABLE refresh_tokens (
+    id          UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id     UUID        NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    token_hash  VARCHAR(255) NOT NULL UNIQUE,  -- Hash SHA-256 del token real
+    device_info VARCHAR(300),                  -- Navegador / SO del dispositivo
+    ip_address  INET,
+    expires_at  TIMESTAMPTZ NOT NULL,
+    revoked     BOOLEAN     NOT NULL DEFAULT FALSE,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+COMMENT ON TABLE  refresh_tokens            IS 'Tokens de refresco JWT. El token real nunca se almacena, solo su hash.';
+COMMENT ON COLUMN refresh_tokens.token_hash IS 'SHA-256 del refresh token. El token en texto claro se envía solo al cliente.';
+
