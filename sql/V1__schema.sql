@@ -35,3 +35,12 @@ CREATE TABLE users (
     created_at      TIMESTAMPTZ     NOT NULL DEFAULT NOW(),
     updated_at      TIMESTAMPTZ     NOT NULL DEFAULT NOW(),
 
+    -- Preferencias de notificación
+    notify_email    BOOLEAN         NOT NULL DEFAULT TRUE,
+    notify_push     BOOLEAN         NOT NULL DEFAULT TRUE,
+    notify_sms      BOOLEAN         NOT NULL DEFAULT FALSE,
+
+    CONSTRAINT users_email_format CHECK (
+        email ~* '^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$'
+    )
+);
