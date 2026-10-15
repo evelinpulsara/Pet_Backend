@@ -67,3 +67,24 @@ CREATE TABLE refresh_tokens (
 COMMENT ON TABLE  refresh_tokens            IS 'Tokens de refresco JWT. El token real nunca se almacena, solo su hash.';
 COMMENT ON COLUMN refresh_tokens.token_hash IS 'SHA-256 del refresh token. El token en texto claro se envía solo al cliente.';
 
+-- ====================================================================
+--  TABLA: pets
+--  Información principal de cada mascota.
+-- ====================================================================
+CREATE TABLE pets (
+    id                  UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    owner_id            UUID        NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    name                VARCHAR(100) NOT NULL,
+    species             VARCHAR(50)  NOT NULL,   -- 'dog', 'cat', 'bird', 'rabbit', 'other'
+    breed               VARCHAR(100),
+    sex                 CHAR(1)     NOT NULL,    -- 'M' (macho), 'F' (hembra), 'U' (desconocido)
+    birth_date          DATE,
+    color_description   VARCHAR(200),            -- "negro con manchas blancas en el pecho"
+    photo_url           VARCHAR(500),            -- URL en almacenamiento seguro (S3, etc.)
+    microchip_number    VARCHAR(50),             -- Número de microchip (si tiene)
+    is_neutered         BOOLEAN,
+    status              VARCHAR(20) NOT NULL DEFAULT 'home',  -- 'home', 'away', 'lost', 'inactive'
+    notes               TEXT,
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
