@@ -102,3 +102,24 @@ COMMENT ON TABLE  pets         IS 'Registro de mascotas. Cada mascota pertenece 
 COMMENT ON COLUMN pets.status  IS 'home=en casa, away=fuera de zona, lost=extraviada, found=recuperada, inactive=dispositivo apagado.';
 COMMENT ON COLUMN pets.photo_url IS 'URL pública o firmada hacia el almacenamiento de imágenes. No guardar la imagen en la BD.';
 
+-- ====================================================================
+--  TABLA: tracker_devices
+--  Dispositivos GPS/BLE asociados a una mascota.
+-- ====================================================================
+CREATE TABLE tracker_devices (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID        NOT NULL REFERENCES pets(id) ON DELETE CASCADE,
+    device_uid      VARCHAR(100) NOT NULL UNIQUE,  -- Identificador único del hardware
+    device_type     VARCHAR(50) NOT NULL DEFAULT 'gps',  -- 'gps', 'ble', 'lora', 'wifi'
+    firmware_version VARCHAR(20),
+    battery_level   SMALLINT,                       -- 0-100 (%)
+    is_online       BOOLEAN     NOT NULL DEFAULT FALSE,
+    last_seen_at    TIMESTAMPTZ,                    -- Última vez que el dispositivo envió señal
+    activated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    deactivated_at  TIMESTAMPTZ,
+
+    CONSTRAINT device_battery_range CHECK (battery_level IS NULL OR battery_level BETWEEN 0 AND 100),
+    CONSTRAINT device_type_values CHECK (
+        device_type IN ('gps', 'ble', 'lora', 'wifi', 'other')
+    )
+);
