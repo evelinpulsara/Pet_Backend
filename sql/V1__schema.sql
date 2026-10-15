@@ -88,3 +88,12 @@ CREATE TABLE pets (
     created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
+    CONSTRAINT pet_species_values CHECK (
+        species IN ('dog', 'cat', 'bird', 'rabbit', 'reptile', 'fish', 'other')
+    ),
+    CONSTRAINT pet_sex_values CHECK (sex IN ('M', 'F', 'U')),
+    CONSTRAINT pet_status_values CHECK (
+        status IN ('home', 'away', 'lost', 'found', 'inactive')
+    ),
+    CONSTRAINT pet_name_not_empty CHECK (char_length(trim(name)) > 0)
+);
