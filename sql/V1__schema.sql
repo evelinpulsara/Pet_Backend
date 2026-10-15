@@ -97,3 +97,8 @@ CREATE TABLE pets (
     ),
     CONSTRAINT pet_name_not_empty CHECK (char_length(trim(name)) > 0)
 );
+
+COMMENT ON TABLE  pets         IS 'Registro de mascotas. Cada mascota pertenece a un usuario (owner_id).';
+COMMENT ON COLUMN pets.status  IS 'home=en casa, away=fuera de zona, lost=extraviada, found=recuperada, inactive=dispositivo apagado.';
+COMMENT ON COLUMN pets.photo_url IS 'URL pública o firmada hacia el almacenamiento de imágenes. No guardar la imagen en la BD.';
+
