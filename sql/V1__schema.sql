@@ -152,3 +152,14 @@ CREATE TABLE location_history (
     heading_deg     NUMERIC(5, 2),              -- Dirección del movimiento (0-360°)
     battery_pct     SMALLINT,                   -- Nivel de batería en el momento del registro
 
+    CONSTRAINT loc_latitude_range  CHECK (latitude  BETWEEN -90  AND 90),
+    CONSTRAINT loc_longitude_range CHECK (longitude BETWEEN -180 AND 180),
+    CONSTRAINT loc_speed_positive  CHECK (speed_kmh IS NULL OR speed_kmh >= 0),
+    CONSTRAINT loc_heading_range   CHECK (heading_deg IS NULL OR heading_deg BETWEEN 0 AND 360),
+    CONSTRAINT loc_battery_range   CHECK (battery_pct IS NULL OR battery_pct BETWEEN 0 AND 100)
+);
+
+COMMENT ON TABLE  location_history IS 'Serie temporal de posiciones GPS. Puede crecer a millones de filas; el índice de fecha es crítico.';
+COMMENT ON COLUMN location_history.accuracy_m IS 'Margen de error del GPS en metros. Cuanto menor, más preciso.';
+COMMENT ON COLUMN location_history.speed_kmh  IS 'Calculada por el dispositivo o el servidor. No disponible en todos los modelos.';
+
