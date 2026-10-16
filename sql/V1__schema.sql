@@ -123,3 +123,8 @@ CREATE TABLE tracker_devices (
         device_type IN ('gps', 'ble', 'lora', 'wifi', 'other')
     )
 );
+
+COMMENT ON TABLE  tracker_devices          IS 'Dispositivos de rastreo vinculados a una mascota. Un dispositivo activo por mascota a la vez.';
+COMMENT ON COLUMN tracker_devices.device_uid IS 'ID de hardware único. Lo proporciona el fabricante del dispositivo.';
+COMMENT ON COLUMN tracker_devices.is_online  IS 'Actualizado por el servidor cuando recibe señal del dispositivo.';
+
