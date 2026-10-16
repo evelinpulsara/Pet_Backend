@@ -141,3 +141,14 @@ CREATE TABLE location_history (
     device_id       UUID        REFERENCES tracker_devices(id) ON DELETE SET NULL,
     recorded_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
+    -- Coordenadas — PostGIS (si está disponible):
+    -- location     GEOGRAPHY(POINT, 4326),
+    -- Sin PostGIS usa estas dos columnas:
+    latitude        NUMERIC(10, 7) NOT NULL,    -- -90 a +90
+    longitude       NUMERIC(10, 7) NOT NULL,    -- -180 a +180
+    altitude_m      NUMERIC(7, 2),              -- Altitud en metros (opcional)
+    accuracy_m      NUMERIC(6, 2),              -- Precisión del GPS en metros
+    speed_kmh       NUMERIC(6, 2),              -- Velocidad calculada (km/h)
+    heading_deg     NUMERIC(5, 2),              -- Dirección del movimiento (0-360°)
+    battery_pct     SMALLINT,                   -- Nivel de batería en el momento del registro
+
