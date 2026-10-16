@@ -128,3 +128,16 @@ COMMENT ON TABLE  tracker_devices          IS 'Dispositivos de rastreo vinculado
 COMMENT ON COLUMN tracker_devices.device_uid IS 'ID de hardware único. Lo proporciona el fabricante del dispositivo.';
 COMMENT ON COLUMN tracker_devices.is_online  IS 'Actualizado por el servidor cuando recibe señal del dispositivo.';
 
+-- ====================================================================
+--  TABLA: location_history
+--  Historial de coordenadas GPS de cada mascota.
+--  NOTA ACADÉMICA: Los datos reales requieren un dispositivo GPS físico
+--  y un servidor MQTT/WebSocket para recibir las coordenadas.
+--  Esta tabla almacena los datos UNA VEZ que ya fueron recibidos.
+-- ====================================================================
+CREATE TABLE location_history (
+    id              BIGSERIAL   PRIMARY KEY,           -- BIGSERIAL: puede haber millones de registros
+    pet_id          UUID        NOT NULL REFERENCES pets(id) ON DELETE CASCADE,
+    device_id       UUID        REFERENCES tracker_devices(id) ON DELETE SET NULL,
+    recorded_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
