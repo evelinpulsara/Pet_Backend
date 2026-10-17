@@ -195,3 +195,27 @@ CREATE TABLE safe_zones (
 COMMENT ON TABLE  safe_zones          IS 'Zonas geográficas seguras definidas por el usuario. Se usa para generar alertas de salida.';
 COMMENT ON COLUMN safe_zones.radius_m IS 'Radio en metros desde el centro de la zona. Mínimo 10m, máximo 50km.';
 
+-- ====================================================================
+--  TABLA: alerts
+--  Alertas generadas cuando una mascota sale de una zona segura,
+--  el dispositivo pierde señal, o la IA detecta comportamiento inusual.
+-- ====================================================================
+CREATE TABLE alerts (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID        NOT NULL REFERENCES pets(id) ON DELETE CASCADE,
+    zone_id         UUID        REFERENCES safe_zones(id) ON DELETE SET NULL,
+    alert_type      VARCHAR(50) NOT NULL,
+    -- 'out_of_zone'    : mascota salió de la zona segura
+    -- 'device_offline' : dispositivo perdió conexión
+    -- 'low_battery'    : batería baja (<20%)
+    -- 'unusual_activity': IA detectó comportamiento inusual
+    -- 'pet_lost'       : marcada como extraviada manualmente
+    severity        VARCHAR(10) NOT NULL DEFAULT 'medium',  -- 'low', 'medium', 'high', 'critical'
+    message         TEXT        NOT NULL,
+    latitude        NUMERIC(10, 7),    -- Posición cuando se generó la alerta
+    longitude       NUMERIC(10, 7),
+    is_resolved     BOOLEAN     NOT NULL DEFAULT FALSE,
+    resolved_at     TIMESTAMPTZ,
+    resolved_by_id  UUID        REFERENCES users(id) ON DELETE SET NULL,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
