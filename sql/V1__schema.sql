@@ -191,3 +191,7 @@ CREATE TABLE safe_zones (
         schedule_start IS NULL OR schedule_end IS NULL OR schedule_end > schedule_start
     )
 );
+
+COMMENT ON TABLE  safe_zones          IS 'Zonas geográficas seguras definidas por el usuario. Se usa para generar alertas de salida.';
+COMMENT ON COLUMN safe_zones.radius_m IS 'Radio en metros desde el centro de la zona. Mínimo 10m, máximo 50km.';
+
