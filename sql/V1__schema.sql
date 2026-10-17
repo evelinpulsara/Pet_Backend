@@ -163,3 +163,21 @@ COMMENT ON TABLE  location_history IS 'Serie temporal de posiciones GPS. Puede c
 COMMENT ON COLUMN location_history.accuracy_m IS 'Margen de error del GPS en metros. Cuanto menor, más preciso.';
 COMMENT ON COLUMN location_history.speed_kmh  IS 'Calculada por el dispositivo o el servidor. No disponible en todos los modelos.';
 
+-- ====================================================================
+--  TABLA: safe_zones
+--  Zonas seguras configuradas por el usuario (hogar, parque, etc.)
+-- ====================================================================
+CREATE TABLE safe_zones (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID        NOT NULL REFERENCES pets(id) ON DELETE CASCADE,
+    name            VARCHAR(100) NOT NULL,          -- "Casa", "Parque Central", "Trabajo"
+    zone_type       VARCHAR(30) NOT NULL DEFAULT 'home',  -- 'home', 'park', 'vet', 'custom'
+    center_lat      NUMERIC(10, 7) NOT NULL,
+    center_lon      NUMERIC(10, 7) NOT NULL,
+    radius_m        NUMERIC(8, 2) NOT NULL,         -- Radio de la zona segura en metros
+    is_active       BOOLEAN     NOT NULL DEFAULT TRUE,
+    schedule_start  TIME,                            -- Hora inicio del horario activo (NULL = siempre)
+    schedule_end    TIME,                            -- Hora fin del horario activo
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
