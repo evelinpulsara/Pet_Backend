@@ -181,3 +181,13 @@ CREATE TABLE safe_zones (
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
+    CONSTRAINT zone_lat_range    CHECK (center_lat BETWEEN -90  AND 90),
+    CONSTRAINT zone_lon_range    CHECK (center_lon BETWEEN -180 AND 180),
+    CONSTRAINT zone_radius_range CHECK (radius_m   BETWEEN 10   AND 50000),
+    CONSTRAINT zone_type_values  CHECK (
+        zone_type IN ('home', 'park', 'vet', 'school', 'custom')
+    ),
+    CONSTRAINT zone_schedule_order CHECK (
+        schedule_start IS NULL OR schedule_end IS NULL OR schedule_end > schedule_start
+    )
+);
