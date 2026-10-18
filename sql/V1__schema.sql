@@ -257,3 +257,24 @@ CREATE TABLE medical_records (
 
 COMMENT ON TABLE medical_records IS 'Ficha médica general. Datos sensibles: solo el propietario puede consultarlos.';
 
+-- ====================================================================
+--  TABLA: vaccinations
+--  Historial de vacunaciones.
+-- ====================================================================
+CREATE TABLE vaccinations (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID        NOT NULL REFERENCES pets(id) ON DELETE CASCADE,
+    vaccine_name    VARCHAR(100) NOT NULL,
+    administered_at DATE        NOT NULL,
+    next_due_date   DATE,               -- Fecha de próxima dosis (NULL = dosis única)
+    batch_number    VARCHAR(50),
+    administered_by VARCHAR(150),       -- Nombre del veterinario
+    notes           TEXT,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT vaccination_dates CHECK (next_due_date IS NULL OR next_due_date > administered_at)
+);
+
+COMMENT ON TABLE vaccinations IS 'Registro de vacunas aplicadas y fechas de refuerzo.';
+
+-- ====================================================================
