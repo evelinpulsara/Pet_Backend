@@ -233,3 +233,27 @@ CREATE TABLE alerts (
 
 COMMENT ON TABLE alerts IS 'Alertas del sistema. Generadas por reglas geográficas, estado del dispositivo o módulos de IA.';
 
+-- ====================================================================
+--  TABLA: medical_records
+--  Ficha médica de la mascota (1:1 con pets, se crea junto a la mascota).
+-- ====================================================================
+CREATE TABLE medical_records (
+    id              UUID    PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID    NOT NULL UNIQUE REFERENCES pets(id) ON DELETE CASCADE,
+    blood_type      VARCHAR(10),
+    weight_kg       NUMERIC(5, 2),
+    known_allergies TEXT,               -- Texto libre: "Polen, penicilina"
+    chronic_conditions TEXT,            -- Texto libre: "Diabetes tipo 1, artritis"
+    dietary_restrictions TEXT,
+    vet_name        VARCHAR(150),       -- Veterinario/clínica habitual
+    vet_phone       VARCHAR(25),
+    vet_address     TEXT,
+    insurance_policy VARCHAR(100),      -- Número de póliza (si aplica)
+    notes           TEXT,
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT medical_weight_positive CHECK (weight_kg IS NULL OR weight_kg > 0)
+);
+
+COMMENT ON TABLE medical_records IS 'Ficha médica general. Datos sensibles: solo el propietario puede consultarlos.';
+
