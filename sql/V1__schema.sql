@@ -219,3 +219,17 @@ CREATE TABLE alerts (
     resolved_by_id  UUID        REFERENCES users(id) ON DELETE SET NULL,
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
+    CONSTRAINT alert_type_values CHECK (
+        alert_type IN ('out_of_zone','device_offline','low_battery','unusual_activity','pet_lost','other')
+    ),
+    CONSTRAINT alert_severity_values CHECK (
+        severity IN ('low','medium','high','critical')
+    ),
+    CONSTRAINT alert_resolved_consistency CHECK (
+        (is_resolved = FALSE AND resolved_at IS NULL) OR
+        (is_resolved = TRUE  AND resolved_at IS NOT NULL)
+    )
+);
+
+COMMENT ON TABLE alerts IS 'Alertas del sistema. Generadas por reglas geográficas, estado del dispositivo o módulos de IA.';
+
