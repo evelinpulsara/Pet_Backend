@@ -278,3 +278,23 @@ CREATE TABLE vaccinations (
 COMMENT ON TABLE vaccinations IS 'Registro de vacunas aplicadas y fechas de refuerzo.';
 
 -- ====================================================================
+--  TABLA: medications
+--  Medicamentos activos o históricos de la mascota.
+-- ====================================================================
+CREATE TABLE medications (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID        NOT NULL REFERENCES pets(id) ON DELETE CASCADE,
+    name            VARCHAR(150) NOT NULL,
+    dosage          VARCHAR(100),           -- "5 mg cada 12 horas"
+    start_date      DATE        NOT NULL,
+    end_date        DATE,                   -- NULL si es crónico / indefinido
+    prescribed_by   VARCHAR(150),
+    is_active       BOOLEAN     NOT NULL DEFAULT TRUE,
+    notes           TEXT,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT medication_dates CHECK (end_date IS NULL OR end_date >= start_date)
+);
+
+COMMENT ON TABLE medications IS 'Medicamentos de la mascota. is_active=TRUE para tratamientos en curso.';
+
