@@ -348,3 +348,10 @@ CREATE TABLE lost_pet_reports (
 
 COMMENT ON TABLE lost_pet_reports IS 'Reporte de extravío. description_for_finder es información pública para ayudar a recuperar la mascota.';
 
+-- ====================================================================
+--  TABLAS DE IA — Preparadas para módulos de inteligencia artificial
+--  NOTA ACADÉMICA: Estas tablas almacenan resultados de análisis de IA.
+--  El modelo de IA en sí (Python/TensorFlow/scikit-learn) es un componente
+--  externo que alimenta estas tablas. No se simulan predicciones reales.
+-- ====================================================================
+
