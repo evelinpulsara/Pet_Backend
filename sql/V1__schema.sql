@@ -298,3 +298,25 @@ CREATE TABLE medications (
 
 COMMENT ON TABLE medications IS 'Medicamentos de la mascota. is_active=TRUE para tratamientos en curso.';
 
+-- ====================================================================
+--  TABLA: emergency_contacts
+--  Contactos a notificar si la mascota se extravía.
+-- ====================================================================
+CREATE TABLE emergency_contacts (
+    id          UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id      UUID        NOT NULL REFERENCES pets(id) ON DELETE CASCADE,
+    full_name   VARCHAR(150) NOT NULL,
+    relationship VARCHAR(80),           -- "Vecino", "Familiar", "Veterinario"
+    phone       VARCHAR(25) NOT NULL,
+    email       VARCHAR(255),
+    is_primary  BOOLEAN     NOT NULL DEFAULT FALSE,
+    notes       TEXT,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT contact_email_format CHECK (
+        email IS NULL OR email ~* '^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$'
+    )
+);
+
+COMMENT ON TABLE emergency_contacts IS 'Personas a contactar en caso de extravío. Al menos un contacto debería tener is_primary=TRUE.';
+
