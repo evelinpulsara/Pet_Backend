@@ -320,3 +320,23 @@ CREATE TABLE emergency_contacts (
 
 COMMENT ON TABLE emergency_contacts IS 'Personas a contactar en caso de extravío. Al menos un contacto debería tener is_primary=TRUE.';
 
+-- ====================================================================
+--  TABLA: lost_pet_reports
+--  Reporte formal de mascota extraviada con información para recuperarla.
+-- ====================================================================
+CREATE TABLE lost_pet_reports (
+    id                  UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id              UUID        NOT NULL REFERENCES pets(id) ON DELETE CASCADE,
+    reported_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    last_seen_at        TIMESTAMPTZ,
+    last_seen_lat       NUMERIC(10, 7),
+    last_seen_lon       NUMERIC(10, 7),
+    last_seen_address   TEXT,
+    reward_description  TEXT,           -- "Se ofrece recompensa" (sin montos para privacidad)
+    public_contact      VARCHAR(255),   -- Teléfono/correo público para quien encuentre a la mascota
+    description_for_finder TEXT,        -- "Lleva collar rojo, responde a 'Max'"
+    is_found            BOOLEAN     NOT NULL DEFAULT FALSE,
+    found_at            TIMESTAMPTZ,
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
