@@ -340,3 +340,11 @@ CREATE TABLE lost_pet_reports (
     created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
+    CONSTRAINT lost_report_found_consistency CHECK (
+        (is_found = FALSE AND found_at IS NULL) OR
+        (is_found = TRUE  AND found_at IS NOT NULL)
+    )
+);
+
+COMMENT ON TABLE lost_pet_reports IS 'Reporte de extravío. description_for_finder es información pública para ayudar a recuperar la mascota.';
+
