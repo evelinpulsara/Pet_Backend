@@ -400,3 +400,23 @@ CREATE TABLE ai_anomaly_detections (
 
 COMMENT ON TABLE ai_anomaly_detections IS 'Comportamientos inusuales detectados por IA. Siempre requieren revisión humana (is_confirmed).';
 
+-- ====================================================================
+--  TABLA: audit_log
+--  Registro de seguridad: quién hizo qué y cuándo.
+-- ====================================================================
+CREATE TABLE audit_log (
+    id              BIGSERIAL   PRIMARY KEY,
+    user_id         UUID        REFERENCES users(id) ON DELETE SET NULL,
+    action          VARCHAR(60) NOT NULL,
+    -- 'USER_LOGIN', 'USER_LOGOUT', 'PET_CREATED', 'PET_UPDATED',
+    -- 'ALERT_CREATED', 'DATA_EXPORT', 'PASSWORD_CHANGED', etc.
+    entity_type     VARCHAR(60),
+    entity_id       UUID,
+    ip_address      INET,
+    user_agent      VARCHAR(400),
+    details         JSONB,              -- Información adicional del evento
+    performed_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+COMMENT ON TABLE audit_log IS 'Registro de auditoría de seguridad y acciones de usuario. Nunca modificar ni borrar registros de este log.';
+
