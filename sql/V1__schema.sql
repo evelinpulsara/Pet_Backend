@@ -355,3 +355,28 @@ COMMENT ON TABLE lost_pet_reports IS 'Reporte de extravío. description_for_find
 --  externo que alimenta estas tablas. No se simulan predicciones reales.
 -- ====================================================================
 
+-- Patrones de movimiento aprendidos por mascota
+CREATE TABLE ai_movement_patterns (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID        NOT NULL REFERENCES pets(id) ON DELETE CASCADE,
+    pattern_type    VARCHAR(50) NOT NULL,
+    -- 'daily_routine'   : rutina diaria detectada
+    -- 'frequent_zone'   : zona visitada con frecuencia
+    -- 'unusual_time'    : movimiento fuera del horario normal
+    description     TEXT,
+    confidence      NUMERIC(4, 3),          -- 0.000 a 1.000
+    detected_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    data_from       TIMESTAMPTZ,            -- Inicio del período analizado
+    data_to         TIMESTAMPTZ,            -- Fin del período analizado
+    model_version   VARCHAR(30),            -- Versión del modelo de IA usado
+    metadata        JSONB,                  -- Datos adicionales del modelo (flexibles)
+
+    CONSTRAINT ai_confidence_range CHECK (confidence IS NULL OR confidence BETWEEN 0 AND 1),
+    CONSTRAINT ai_pattern_type_values CHECK (
+        pattern_type IN ('daily_routine','frequent_zone','unusual_time','activity_change','other')
+    )
+);
+
+COMMENT ON TABLE  ai_movement_patterns IS 'Resultados de análisis de patrones de movimiento generados por el módulo de IA externo.';
+COMMENT ON COLUMN ai_movement_patterns.confidence IS 'Nivel de confianza del modelo (0-1). Solo informativo; no reemplaza supervisión humana.';
+
