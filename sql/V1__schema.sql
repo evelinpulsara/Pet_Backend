@@ -420,3 +420,11 @@ CREATE TABLE audit_log (
 
 COMMENT ON TABLE audit_log IS 'Registro de auditoría de seguridad y acciones de usuario. Nunca modificar ni borrar registros de este log.';
 
+-- ====================================================================
+--  ÍNDICES — Optimización de consultas críticas
+-- ====================================================================
+
+-- Autenticación y sesiones
+CREATE INDEX idx_users_email           ON users(email);
+CREATE INDEX idx_refresh_tokens_user   ON refresh_tokens(user_id, expires_at);
+
