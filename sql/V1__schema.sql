@@ -380,3 +380,23 @@ CREATE TABLE ai_movement_patterns (
 COMMENT ON TABLE  ai_movement_patterns IS 'Resultados de análisis de patrones de movimiento generados por el módulo de IA externo.';
 COMMENT ON COLUMN ai_movement_patterns.confidence IS 'Nivel de confianza del modelo (0-1). Solo informativo; no reemplaza supervisión humana.';
 
+-- Anomalías detectadas por IA
+CREATE TABLE ai_anomaly_detections (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID        NOT NULL REFERENCES pets(id) ON DELETE CASCADE,
+    alert_id        UUID        REFERENCES alerts(id) ON DELETE SET NULL,
+    anomaly_type    VARCHAR(80) NOT NULL,
+    description     TEXT        NOT NULL,
+    severity_score  NUMERIC(4, 3),          -- 0.000 a 1.000
+    detected_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    location_lat    NUMERIC(10, 7),
+    location_lon    NUMERIC(10, 7),
+    is_confirmed    BOOLEAN,                -- NULL=pendiente revisión, TRUE/FALSE=revisado por humano
+    model_version   VARCHAR(30),
+    metadata        JSONB,
+
+    CONSTRAINT ai_severity_range CHECK (severity_score IS NULL OR severity_score BETWEEN 0 AND 1)
+);
+
+COMMENT ON TABLE ai_anomaly_detections IS 'Comportamientos inusuales detectados por IA. Siempre requieren revisión humana (is_confirmed).';
+
