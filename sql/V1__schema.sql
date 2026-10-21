@@ -440,3 +440,10 @@ CREATE INDEX idx_devices_uid           ON tracker_devices(device_uid);
 CREATE INDEX idx_location_pet_time     ON location_history(pet_id, recorded_at DESC);
 CREATE INDEX idx_location_recorded_at  ON location_history(recorded_at DESC);
 
+-- Zonas seguras
+CREATE INDEX idx_zones_pet             ON safe_zones(pet_id) WHERE is_active = TRUE;
+
+-- Alertas no resueltas
+CREATE INDEX idx_alerts_pet            ON alerts(pet_id, created_at DESC);
+CREATE INDEX idx_alerts_unresolved     ON alerts(pet_id) WHERE is_resolved = FALSE;
+
