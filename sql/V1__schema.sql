@@ -436,3 +436,7 @@ CREATE INDEX idx_pets_status           ON pets(status) WHERE status IN ('away', 
 CREATE INDEX idx_devices_pet           ON tracker_devices(pet_id);
 CREATE INDEX idx_devices_uid           ON tracker_devices(device_uid);
 
+-- Historial de ubicación — Índice por mascota + tiempo (crítico por volumen)
+CREATE INDEX idx_location_pet_time     ON location_history(pet_id, recorded_at DESC);
+CREATE INDEX idx_location_recorded_at  ON location_history(recorded_at DESC);
+
