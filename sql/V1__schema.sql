@@ -428,3 +428,7 @@ COMMENT ON TABLE audit_log IS 'Registro de auditoría de seguridad y acciones de
 CREATE INDEX idx_users_email           ON users(email);
 CREATE INDEX idx_refresh_tokens_user   ON refresh_tokens(user_id, expires_at);
 
+-- Mascotas por propietario (consulta más frecuente)
+CREATE INDEX idx_pets_owner            ON pets(owner_id);
+CREATE INDEX idx_pets_status           ON pets(status) WHERE status IN ('away', 'lost');
+
