@@ -432,3 +432,7 @@ CREATE INDEX idx_refresh_tokens_user   ON refresh_tokens(user_id, expires_at);
 CREATE INDEX idx_pets_owner            ON pets(owner_id);
 CREATE INDEX idx_pets_status           ON pets(status) WHERE status IN ('away', 'lost');
 
+-- Dispositivos
+CREATE INDEX idx_devices_pet           ON tracker_devices(pet_id);
+CREATE INDEX idx_devices_uid           ON tracker_devices(device_uid);
+
