@@ -468,3 +468,10 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_users_updated_at
+    BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION fn_update_updated_at();
+
+CREATE TRIGGER trg_pets_updated_at
+    BEFORE UPDATE ON pets FOR EACH ROW EXECUTE FUNCTION fn_update_updated_at();
+
