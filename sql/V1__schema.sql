@@ -458,3 +458,13 @@ CREATE INDEX idx_ai_anomalies_pet      ON ai_anomaly_detections(pet_id, detected
 -- Auditoría
 CREATE INDEX idx_audit_user            ON audit_log(user_id, performed_at DESC);
 
+-- ====================================================================
+--  FUNCIÓN: Actualizar updated_at automáticamente
+-- ====================================================================
+CREATE OR REPLACE FUNCTION fn_update_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
