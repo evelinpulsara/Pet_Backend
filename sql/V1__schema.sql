@@ -475,3 +475,12 @@ CREATE TRIGGER trg_users_updated_at
 CREATE TRIGGER trg_pets_updated_at
     BEFORE UPDATE ON pets FOR EACH ROW EXECUTE FUNCTION fn_update_updated_at();
 
+CREATE TRIGGER trg_zones_updated_at
+    BEFORE UPDATE ON safe_zones FOR EACH ROW EXECUTE FUNCTION fn_update_updated_at();
+
+CREATE TRIGGER trg_medical_updated_at
+    BEFORE UPDATE ON medical_records FOR EACH ROW EXECUTE FUNCTION fn_update_updated_at();
+
+CREATE TRIGGER trg_lost_report_updated_at
+    BEFORE UPDATE ON lost_pet_reports FOR EACH ROW EXECUTE FUNCTION fn_update_updated_at();
+
