@@ -447,3 +447,14 @@ CREATE INDEX idx_zones_pet             ON safe_zones(pet_id) WHERE is_active = T
 CREATE INDEX idx_alerts_pet            ON alerts(pet_id, created_at DESC);
 CREATE INDEX idx_alerts_unresolved     ON alerts(pet_id) WHERE is_resolved = FALSE;
 
+-- Datos médicos
+CREATE INDEX idx_vaccinations_pet      ON vaccinations(pet_id, next_due_date);
+CREATE INDEX idx_medications_pet       ON medications(pet_id) WHERE is_active = TRUE;
+
+-- IA
+CREATE INDEX idx_ai_patterns_pet       ON ai_movement_patterns(pet_id, detected_at DESC);
+CREATE INDEX idx_ai_anomalies_pet      ON ai_anomaly_detections(pet_id, detected_at DESC);
+
+-- Auditoría
+CREATE INDEX idx_audit_user            ON audit_log(user_id, performed_at DESC);
+
