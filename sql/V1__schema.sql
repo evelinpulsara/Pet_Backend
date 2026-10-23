@@ -504,3 +504,10 @@ ALTER TABLE lost_pet_reports   ENABLE ROW LEVEL SECURITY;
 CREATE POLICY pol_pets_owner ON pets
     USING (owner_id = current_setting('app.current_user_id', TRUE)::UUID);
 
+-- Política derivada: tablas que dependen del pet_id
+CREATE POLICY pol_devices_owner ON tracker_devices
+    USING (pet_id IN (SELECT id FROM pets WHERE owner_id = current_setting('app.current_user_id', TRUE)::UUID));
+
+CREATE POLICY pol_location_owner ON location_history
+    USING (pet_id IN (SELECT id FROM pets WHERE owner_id = current_setting('app.current_user_id', TRUE)::UUID));
+
