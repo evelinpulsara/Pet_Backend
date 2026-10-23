@@ -500,3 +500,7 @@ ALTER TABLE medications        ENABLE ROW LEVEL SECURITY;
 ALTER TABLE emergency_contacts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE lost_pet_reports   ENABLE ROW LEVEL SECURITY;
 
+-- Política base: solo las mascotas del usuario autenticado
+CREATE POLICY pol_pets_owner ON pets
+    USING (owner_id = current_setting('app.current_user_id', TRUE)::UUID);
+
