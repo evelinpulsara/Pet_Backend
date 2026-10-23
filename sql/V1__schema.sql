@@ -484,3 +484,13 @@ CREATE TRIGGER trg_medical_updated_at
 CREATE TRIGGER trg_lost_report_updated_at
     BEFORE UPDATE ON lost_pet_reports FOR EACH ROW EXECUTE FUNCTION fn_update_updated_at();
 
+-- ====================================================================
+--  ROW LEVEL SECURITY (RLS)
+--  Garantiza que cada usuario solo acceda a sus propios datos.
+--  La app debe ejecutar: SET app.current_user_id = '<uuid>' por sesión.
+-- ====================================================================
+ALTER TABLE pets               ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tracker_devices    ENABLE ROW LEVEL SECURITY;
+ALTER TABLE location_history   ENABLE ROW LEVEL SECURITY;
+ALTER TABLE safe_zones         ENABLE ROW LEVEL SECURITY;
+ALTER TABLE alerts             ENABLE ROW LEVEL SECURITY;
