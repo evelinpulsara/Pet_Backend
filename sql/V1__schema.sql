@@ -520,3 +520,9 @@ CREATE POLICY pol_alerts_owner ON alerts
 CREATE POLICY pol_medical_owner ON medical_records
     USING (pet_id IN (SELECT id FROM pets WHERE owner_id = current_setting('app.current_user_id', TRUE)::UUID));
 
+CREATE POLICY pol_vaccinations_owner ON vaccinations
+    USING (pet_id IN (SELECT id FROM pets WHERE owner_id = current_setting('app.current_user_id', TRUE)::UUID));
+
+CREATE POLICY pol_medications_owner ON medications
+    USING (pet_id IN (SELECT id FROM pets WHERE owner_id = current_setting('app.current_user_id', TRUE)::UUID));
+
