@@ -18,3 +18,14 @@ spring-config/
 docs/                     # Documentación
 ```
 
+## Uso
+
+1. Crea una base de datos PostgreSQL (local, Neon o Supabase).
+2. En el proyecto Spring Boot:
+   - Copia `spring-config/pom.xml` a la raíz del proyecto.
+   - Copia `spring-config/application.properties.template` a `src/main/resources/application.properties`
+     y define las variables de entorno (`DB_HOST`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`, ...).
+   - Copia los scripts de `sql/` a `src/main/resources/db/migration/` para que Flyway los aplique.
+3. Ejecuta `./mvnw spring-boot:run`.
+
+> `application.properties` está en `.gitignore`: nunca subas credenciales al repositorio.
