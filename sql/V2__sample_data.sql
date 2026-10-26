@@ -25,3 +25,13 @@ VALUES
      '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMUJged0rty3OsOEqFkHbOjzBO',
      'Luisa Fernández Mora', '+52 33 9876 5432', 'America/Mexico_City', FALSE);
 
+-- ---- MASCOTAS ----
+INSERT INTO pets (id, owner_id, name, species, breed, sex, birth_date,
+                  color_description, microchip_number, is_neutered, status)
+VALUES
+    -- Carlos tiene 2 mascotas
+    ('aaaa0001-0000-0000-0000-000000000001',
+     '11111111-1111-1111-1111-111111111111',
+     'Max', 'dog', 'Labrador Retriever', 'M', '2020-03-15',
+     'Amarillo dorado, collar azul', 'MCH-2024-001', TRUE, 'home'),
+
