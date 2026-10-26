@@ -35,3 +35,9 @@ VALUES
      'Max', 'dog', 'Labrador Retriever', 'M', '2020-03-15',
      'Amarillo dorado, collar azul', 'MCH-2024-001', TRUE, 'home'),
 
+    ('aaaa0002-0000-0000-0000-000000000002',
+     '11111111-1111-1111-1111-111111111111',
+     'Luna', 'cat', 'Siamés', 'F', '2021-07-20',
+     'Crema con extremidades oscuras, ojos azules', NULL, TRUE, 'home'),
+
+    -- Ana tiene 1 mascota
