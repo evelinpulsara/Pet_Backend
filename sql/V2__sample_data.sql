@@ -15,3 +15,13 @@ VALUES
      '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMUJged0rty3OsOEqFkHbOjzBO',
      'Carlos Mendoza Ríos', '+52 55 1234 5678', 'America/Mexico_City', TRUE),
 
+    ('22222222-2222-2222-2222-222222222222',
+     'ana.torres@ejemplo.com',
+     '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMUJged0rty3OsOEqFkHbOjzBO',
+     'Ana Torres Vega', '+57 300 987 6543', 'America/Bogota', TRUE),
+
+    ('33333333-3333-3333-3333-333333333333',
+     'luisa.fernandez@ejemplo.com',
+     '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMUJged0rty3OsOEqFkHbOjzBO',
+     'Luisa Fernández Mora', '+52 33 9876 5432', 'America/Mexico_City', FALSE);
+
