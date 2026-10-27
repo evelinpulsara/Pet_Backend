@@ -41,3 +41,8 @@ VALUES
      'Crema con extremidades oscuras, ojos azules', NULL, TRUE, 'home'),
 
     -- Ana tiene 1 mascota
+    ('aaaa0003-0000-0000-0000-000000000003',
+     '22222222-2222-2222-2222-222222222222',
+     'Coco', 'dog', 'French Bulldog', 'M', '2022-01-10',
+     'Atigrado blanco y negro, collar rojo', 'MCH-2024-002', FALSE, 'lost'),
+
