@@ -60,3 +60,8 @@ VALUES
      'aaaa0001-0000-0000-0000-000000000001',
      'PT-GPS-MX-000001', 'gps', '2.4.1', 87, TRUE, NOW() - INTERVAL '5 minutes'),
 
+    ('dddd0002-0000-0000-0000-000000000002',
+     'aaaa0003-0000-0000-0000-000000000003',
+     'PT-GPS-CO-000003', 'gps', '2.4.0', 15, FALSE, NOW() - INTERVAL '3 hours');
+    -- Luna y Michi no tienen dispositivo aún
+
