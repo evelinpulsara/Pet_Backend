@@ -52,3 +52,11 @@ VALUES
      'Michi', 'cat', 'Mestizo', 'F', '2019-11-05',
      'Naranja con rayas, sin collar actualmente', NULL, TRUE, 'home');
 
+-- ---- DISPOSITIVOS GPS ----
+INSERT INTO tracker_devices (id, pet_id, device_uid, device_type, firmware_version,
+                              battery_level, is_online, last_seen_at)
+VALUES
+    ('dddd0001-0000-0000-0000-000000000001',
+     'aaaa0001-0000-0000-0000-000000000001',
+     'PT-GPS-MX-000001', 'gps', '2.4.1', 87, TRUE, NOW() - INTERVAL '5 minutes'),
+
