@@ -46,3 +46,9 @@ VALUES
      'Coco', 'dog', 'French Bulldog', 'M', '2022-01-10',
      'Atigrado blanco y negro, collar rojo', 'MCH-2024-002', FALSE, 'lost'),
 
+    -- Luisa tiene 1 mascota
+    ('aaaa0004-0000-0000-0000-000000000004',
+     '33333333-3333-3333-3333-333333333333',
+     'Michi', 'cat', 'Mestizo', 'F', '2019-11-05',
+     'Naranja con rayas, sin collar actualmente', NULL, TRUE, 'home');
+
