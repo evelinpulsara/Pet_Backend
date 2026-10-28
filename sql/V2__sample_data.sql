@@ -65,3 +65,10 @@ VALUES
      'PT-GPS-CO-000003', 'gps', '2.4.0', 15, FALSE, NOW() - INTERVAL '3 hours');
     -- Luna y Michi no tienen dispositivo aún
 
+-- ---- HISTORIAL DE UBICACIONES (datos ficticios, Ciudad de México) ----
+-- Max — en su zona segura (casa de Carlos, Colonia Polanco)
+INSERT INTO location_history (pet_id, device_id, recorded_at, latitude, longitude, accuracy_m, speed_kmh, battery_pct)
+VALUES
+    ('aaaa0001-0000-0000-0000-000000000001', 'dddd0001-0000-0000-0000-000000000001',
+     NOW() - INTERVAL '60 minutes', 19.4326, -99.1332, 4.5, 0.0, 90),
+    ('aaaa0001-0000-0000-0000-000000000001', 'dddd0001-0000-0000-0000-000000000001',
