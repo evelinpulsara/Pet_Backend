@@ -76,3 +76,9 @@ VALUES
     ('aaaa0001-0000-0000-0000-000000000001', 'dddd0001-0000-0000-0000-000000000001',
      NOW() - INTERVAL '5 minutes',  19.4327, -99.1333, 3.8, 0.0, 87);
 
+-- Coco — última posición conocida antes de perderse (Bogotá, Chapinero)
+INSERT INTO location_history (pet_id, device_id, recorded_at, latitude, longitude, accuracy_m, speed_kmh, battery_pct)
+VALUES
+    ('aaaa0003-0000-0000-0000-000000000003', 'dddd0002-0000-0000-0000-000000000002',
+     NOW() - INTERVAL '4 hours',   4.6351, -74.0703, 8.0, 0.5, 30),
+    ('aaaa0003-0000-0000-0000-000000000003', 'dddd0002-0000-0000-0000-000000000002',
