@@ -118,3 +118,9 @@ VALUES
      'El dispositivo de Coco (PT-GPS-CO-000003) no envía señal desde hace 3 horas. Batería: 15%.',
      NULL, NULL),
     -- Batería baja de Max (aviso preventivo)
+    ('aaaa0001-0000-0000-0000-000000000001',
+     NULL,
+     'low_battery', 'low',
+     'Batería del dispositivo de Max al 15%. Se recomienda recargar pronto.',
+     NULL, NULL);
+
