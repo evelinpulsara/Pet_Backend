@@ -102,3 +102,19 @@ VALUES
      'aaaa0003-0000-0000-0000-000000000003',
      'Apartamento', 'home', 4.6351, -74.0703, 100.0);
 
+-- ---- ALERTAS ----
+INSERT INTO alerts (pet_id, zone_id, alert_type, severity, message, latitude, longitude)
+VALUES
+    -- Coco salió de zona
+    ('aaaa0003-0000-0000-0000-000000000003',
+     'zzzz0003-0000-0000-0000-000000000003',
+     'out_of_zone', 'high',
+     'Coco salió de la zona segura "Apartamento". Distancia estimada: 300 m.',
+     4.6380, -74.0750),
+    -- Dispositivo de Coco sin señal
+    ('aaaa0003-0000-0000-0000-000000000003',
+     NULL,
+     'device_offline', 'critical',
+     'El dispositivo de Coco (PT-GPS-CO-000003) no envía señal desde hace 3 horas. Batería: 15%.',
+     NULL, NULL),
+    -- Batería baja de Max (aviso preventivo)
