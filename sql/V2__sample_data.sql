@@ -86,3 +86,15 @@ VALUES
     ('aaaa0003-0000-0000-0000-000000000003', 'dddd0002-0000-0000-0000-000000000002',
      NOW() - INTERVAL '3 hours' + INTERVAL '5 minutes', 4.6395, -74.0780, 15.0, 1.0, 15); -- Última señal
 
+-- ---- ZONAS SEGURAS ----
+INSERT INTO safe_zones (id, pet_id, name, zone_type, center_lat, center_lon, radius_m)
+VALUES
+    -- Casa de Carlos (Max)
+    ('zzzz0001-0000-0000-0000-000000000001',
+     'aaaa0001-0000-0000-0000-000000000001',
+     'Casa', 'home', 19.4326, -99.1332, 150.0),
+    -- Parque donde llevan a Max
+    ('zzzz0002-0000-0000-0000-000000000002',
+     'aaaa0001-0000-0000-0000-000000000001',
+     'Parque Lincoln', 'park', 19.4361, -99.1969, 300.0),
+    -- Casa de Ana (Coco) — ahora extraviado
