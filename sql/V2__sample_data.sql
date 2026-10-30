@@ -124,3 +124,10 @@ VALUES
      'Batería del dispositivo de Max al 15%. Se recomienda recargar pronto.',
      NULL, NULL);
 
+-- Marcar la alerta de batería de Max como resuelta (Carlos recargó el dispositivo)
+UPDATE alerts
+SET is_resolved = TRUE, resolved_at = NOW() - INTERVAL '10 minutes',
+    resolved_by_id = '11111111-1111-1111-1111-111111111111'
+WHERE pet_id = 'aaaa0001-0000-0000-0000-000000000001'
+  AND alert_type = 'low_battery';
+
