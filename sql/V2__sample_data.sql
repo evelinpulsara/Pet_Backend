@@ -138,3 +138,13 @@ VALUES
     ('aaaa0001-0000-0000-0000-000000000001',
      'DEA 1.1+', 32.5, 'Ninguna conocida', NULL,
      'Clínica Veterinaria Polanco', '+52 55 5555 1234'),
+
+    ('aaaa0002-0000-0000-0000-000000000002',
+     NULL, 3.8, 'Camarones (mariscos)', NULL,
+     'Clínica Veterinaria Polanco', '+52 55 5555 1234'),
+
+    ('aaaa0003-0000-0000-0000-000000000003',
+     NULL, 12.0, NULL, 'Alergia respiratoria estacional',
+     'Vetlandia Chapinero', '+57 1 234 5678');
+
+-- ---- VACUNAS ----
