@@ -148,3 +148,14 @@ VALUES
      'Vetlandia Chapinero', '+57 1 234 5678');
 
 -- ---- VACUNAS ----
+INSERT INTO vaccinations (pet_id, vaccine_name, administered_at, next_due_date, administered_by)
+VALUES
+    ('aaaa0001-0000-0000-0000-000000000001',
+     'Rabia', '2024-03-01', '2025-03-01', 'Dra. Ramírez'),
+    ('aaaa0001-0000-0000-0000-000000000001',
+     'Polivalente (DHPP)', '2024-03-01', '2025-03-01', 'Dra. Ramírez'),
+    ('aaaa0003-0000-0000-0000-000000000003',
+     'Rabia', '2023-11-15', '2024-11-15', 'Dr. Herrera'),
+    ('aaaa0002-0000-0000-0000-000000000002',
+     'Triple felina (HCPCh)', '2024-06-10', '2025-06-10', 'Dra. Ramírez');
+
