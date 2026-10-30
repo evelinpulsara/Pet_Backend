@@ -131,3 +131,10 @@ SET is_resolved = TRUE, resolved_at = NOW() - INTERVAL '10 minutes',
 WHERE pet_id = 'aaaa0001-0000-0000-0000-000000000001'
   AND alert_type = 'low_battery';
 
+-- ---- FICHAS MÉDICAS ----
+INSERT INTO medical_records (pet_id, blood_type, weight_kg, known_allergies,
+                              chronic_conditions, vet_name, vet_phone)
+VALUES
+    ('aaaa0001-0000-0000-0000-000000000001',
+     'DEA 1.1+', 32.5, 'Ninguna conocida', NULL,
+     'Clínica Veterinaria Polanco', '+52 55 5555 1234'),
