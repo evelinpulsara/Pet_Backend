@@ -169,3 +169,16 @@ VALUES
      'Cetirizina (antialérgico)', '5 mg cada 24 horas', '2024-09-01', '2024-10-01',
      'Dr. Herrera', FALSE);
 
+-- ---- CONTACTOS DE EMERGENCIA ----
+INSERT INTO emergency_contacts (pet_id, full_name, relationship, phone, email, is_primary)
+VALUES
+    -- Contactos para Max
+    ('aaaa0001-0000-0000-0000-000000000001',
+     'María Mendoza', 'Familiar (hermana)', '+52 55 8888 9999', 'maria.mendoza@ejemplo.com', TRUE),
+    ('aaaa0001-0000-0000-0000-000000000001',
+     'Vecino Juan', 'Vecino de confianza', '+52 55 7777 6666', NULL, FALSE),
+    -- Contacto para Coco (extraviado)
+    ('aaaa0003-0000-0000-0000-000000000003',
+     'Pedro Torres', 'Familiar (hermano)', '+57 310 111 2222', 'pedro.torres@ejemplo.com', TRUE);
+
+-- ---- REPORTE DE EXTRAVÍO (Coco) ----
