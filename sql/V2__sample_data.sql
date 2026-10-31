@@ -192,3 +192,20 @@ VALUES
      '+57 300 987 6543 (Ana)',
      'Bulldog francés, atigrado blanco y negro, collar rojo. Responde al nombre Coco. Es amigable. Por favor llamar a Ana.');
 
+-- ---- PATRONES DE IA (resultado ficticio de análisis previo de Max) ----
+INSERT INTO ai_movement_patterns (pet_id, pattern_type, description, confidence,
+                                   data_from, data_to, model_version)
+VALUES
+    ('aaaa0001-0000-0000-0000-000000000001',
+     'daily_routine',
+     'Max permanece en casa entre las 10 PM y las 7 AM con 94% de consistencia.',
+     0.940,
+     '2024-08-01 00:00:00+00', '2024-10-01 00:00:00+00',
+     'movement-v0.1-alpha'),
+    ('aaaa0001-0000-0000-0000-000000000001',
+     'frequent_zone',
+     'Visita el Parque Lincoln entre 3 y 5 veces por semana, generalmente entre 7 AM y 9 AM.',
+     0.870,
+     '2024-08-01 00:00:00+00', '2024-10-01 00:00:00+00',
+     'movement-v0.1-alpha');
+
