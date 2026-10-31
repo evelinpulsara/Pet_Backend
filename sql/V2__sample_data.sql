@@ -159,3 +159,13 @@ VALUES
     ('aaaa0002-0000-0000-0000-000000000002',
      'Triple felina (HCPCh)', '2024-06-10', '2025-06-10', 'Dra. Ramírez');
 
+-- ---- MEDICAMENTOS ----
+INSERT INTO medications (pet_id, name, dosage, start_date, end_date, prescribed_by, is_active)
+VALUES
+    ('aaaa0001-0000-0000-0000-000000000001',
+     'Simparica (antipulgas)', '1 tableta mensual', '2024-01-01', NULL,
+     'Dra. Ramírez', TRUE),
+    ('aaaa0003-0000-0000-0000-000000000003',
+     'Cetirizina (antialérgico)', '5 mg cada 24 horas', '2024-09-01', '2024-10-01',
+     'Dr. Herrera', FALSE);
+
