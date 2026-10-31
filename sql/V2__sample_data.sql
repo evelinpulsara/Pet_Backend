@@ -182,3 +182,13 @@ VALUES
      'Pedro Torres', 'Familiar (hermano)', '+57 310 111 2222', 'pedro.torres@ejemplo.com', TRUE);
 
 -- ---- REPORTE DE EXTRAVÍO (Coco) ----
+INSERT INTO lost_pet_reports (pet_id, last_seen_at, last_seen_lat, last_seen_lon,
+                               last_seen_address, public_contact, description_for_finder)
+VALUES
+    ('aaaa0003-0000-0000-0000-000000000003',
+     NOW() - INTERVAL '3 hours',
+     4.6395, -74.0780,
+     'Carrera 7 con Calle 63, Chapinero, Bogotá',
+     '+57 300 987 6543 (Ana)',
+     'Bulldog francés, atigrado blanco y negro, collar rojo. Responde al nombre Coco. Es amigable. Por favor llamar a Ana.');
+
