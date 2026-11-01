@@ -10,3 +10,10 @@ info:
       - el COLLAR GPS (por ejemplo un Arduino con Wi-Fi o GSM): `report_location`
       - la APP: mascotas y su historial de ubicaciones
 
+    Reglas comunes:
+      - Header `apikey`: la clave PÚBLICA (publishable) del proyecto.
+      - Header `Content-Profile: pettracker` (escritura/RPC) o
+        `Accept-Profile: pettracker` (lectura) para elegir el esquema.
+      - La app además envía `Authorization: Bearer <token de sesión>`;
+        Row Level Security hace que cada dueño vea solo lo suyo.
+servers:
