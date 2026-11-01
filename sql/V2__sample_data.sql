@@ -209,3 +209,44 @@ VALUES
      '2024-08-01 00:00:00+00', '2024-10-01 00:00:00+00',
      'movement-v0.1-alpha');
 
+-- ---- REGISTRO DE AUDITORÍA ----
+INSERT INTO audit_log (user_id, action, entity_type, entity_id, ip_address)
+VALUES
+    ('11111111-1111-1111-1111-111111111111', 'USER_LOGIN',   NULL,        NULL,
+     '187.155.100.50'),
+    ('11111111-1111-1111-1111-111111111111', 'PET_CREATED',  'pets',
+     'aaaa0001-0000-0000-0000-000000000001', '187.155.100.50'),
+    ('22222222-2222-2222-2222-222222222222', 'USER_LOGIN',   NULL,        NULL,
+     '190.242.80.30'),
+    ('22222222-2222-2222-2222-222222222222', 'LOST_REPORT_CREATED', 'lost_pet_reports', NULL,
+     '190.242.80.30');
+
+-- ====================================================================
+-- CONSULTAS DE VERIFICACIÓN  (descomenta para probar)
+-- ====================================================================
+-- 1. Ver todas las mascotas con su propietario y estado del dispositivo
+-- SELECT u.full_name AS owner, p.name AS pet, p.species, p.status,
+--        td.device_uid, td.is_online, td.battery_level
+-- FROM users u
+-- JOIN pets p ON p.owner_id = u.id
+-- LEFT JOIN tracker_devices td ON td.pet_id = p.id
+-- ORDER BY u.full_name;
+
+-- 2. Última ubicación de cada mascota con dispositivo
+-- SELECT p.name, lh.recorded_at, lh.latitude, lh.longitude, lh.accuracy_m
+-- FROM pets p
+-- JOIN location_history lh ON lh.pet_id = p.id
+-- WHERE lh.recorded_at = (SELECT MAX(lh2.recorded_at)
+--                          FROM location_history lh2 WHERE lh2.pet_id = p.id);
+
+-- 3. Alertas activas (sin resolver)
+-- SELECT p.name, a.alert_type, a.severity, a.message, a.created_at
+-- FROM alerts a JOIN pets p ON a.pet_id = p.id
+-- WHERE a.is_resolved = FALSE
+-- ORDER BY a.created_at DESC;
+
+-- 4. Vacunas próximas a vencer (en los próximos 30 días)
+-- SELECT p.name, v.vaccine_name, v.next_due_date
+-- FROM vaccinations v JOIN pets p ON v.pet_id = p.id
+-- WHERE v.next_due_date BETWEEN CURRENT_DATE AND CURRENT_DATE + 30
+-- ORDER BY v.next_due_date;
