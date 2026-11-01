@@ -1,0 +1,12 @@
+openapi: 3.0.3
+info:
+  title: PetTracker API
+  version: 1.0.0
+  description: |
+    Contrato del API de PetTracker (Contract-First / Single Source of Truth).
+
+    La base de datos vive en Supabase (esquema `pettracker`) y se expone con
+    PostgREST (REST) y funciones RPC. Este archivo describe lo que usan:
+      - el COLLAR GPS (por ejemplo un Arduino con Wi-Fi o GSM): `report_location`
+      - la APP: mascotas y su historial de ubicaciones
+
