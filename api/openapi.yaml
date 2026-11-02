@@ -42,3 +42,14 @@ paths:
         - $ref: '#/components/parameters/ContentProfile'
       requestBody:
         required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ReportLocationRequest' }
+            example:
+              p_device_uid: TRK-1001
+              p_device_key: clave-secreta-123
+              p_lat: 1.2136
+              p_lon: -77.2811
+              p_accuracy: 5
+              p_battery: 87
+      responses:
