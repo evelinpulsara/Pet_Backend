@@ -17,3 +17,12 @@ info:
       - La app además envía `Authorization: Bearer <token de sesión>`;
         Row Level Security hace que cada dueño vea solo lo suyo.
 servers:
+  - url: https://zcsfkltvilypjxocoojz.supabase.co/rest/v1
+    description: Supabase (proyecto compartido; PetTracker usa el esquema pettracker)
+
+tags:
+  - name: Collar
+    description: Lo que llama el dispositivo GPS.
+  - name: App
+    description: Lo que usa la app del dueño.
+
