@@ -26,3 +26,13 @@ tags:
   - name: App
     description: Lo que usa la app del dueño.
 
+paths:
+  /rpc/report_location:
+    post:
+      tags: [Collar]
+      summary: El collar envía su ubicación actual
+      description: |
+        RPC: se llama como una función remota. No requiere usuario; el collar se
+        identifica con su código (`p_device_uid`) y su clave secreta (`p_device_key`),
+        que el dueño configura en la app (Mi collar → Clave del collar GPS).
+        Al guardarla, la app se entera al instante por WebSocket (Supabase Realtime).
