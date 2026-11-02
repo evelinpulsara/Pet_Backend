@@ -36,3 +36,9 @@ paths:
         identifica con su código (`p_device_uid`) y su clave secreta (`p_device_key`),
         que el dueño configura en la app (Mi collar → Clave del collar GPS).
         Al guardarla, la app se entera al instante por WebSocket (Supabase Realtime).
+      security:
+        - apiKey: []
+      parameters:
+        - $ref: '#/components/parameters/ContentProfile'
+      requestBody:
+        required: true
