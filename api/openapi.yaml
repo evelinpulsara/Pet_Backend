@@ -74,3 +74,14 @@ paths:
           bearerAuth: []
       parameters:
         - $ref: '#/components/parameters/ContentProfile'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [p_device_uid, p_key]
+              properties:
+                p_device_uid: { type: string, example: TRK-1001 }
+                p_key: { type: string, minLength: 12, example: clave-secreta-123 }
+      responses:
