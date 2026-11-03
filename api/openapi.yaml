@@ -85,3 +85,10 @@ paths:
                 p_device_uid: { type: string, example: TRK-1001 }
                 p_key: { type: string, minLength: 12, example: clave-secreta-123 }
       responses:
+        '204': { description: Clave guardada (solo se guarda su hash SHA-256). }
+        '400':
+          description: Collar no encontrado o no es del usuario, o clave muy corta.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
