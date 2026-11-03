@@ -53,3 +53,15 @@ paths:
               p_accuracy: 5
               p_battery: 87
       responses:
+        '200':
+          description: Ubicación guardada. Devuelve el número del registro.
+          content:
+            application/json:
+              schema: { type: integer, format: int64, example: 1024 }
+        '400':
+          description: Collar no autorizado (código o clave incorrectos) o datos fuera de rango.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+              example: { code: P0001, message: Collar no autorizado }
+
