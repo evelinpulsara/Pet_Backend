@@ -65,3 +65,12 @@ paths:
               schema: { $ref: '#/components/schemas/Error' }
               example: { code: P0001, message: Collar no autorizado }
 
+  /rpc/set_device_key:
+    post:
+      tags: [App]
+      summary: El dueño le asigna la clave secreta a su collar
+      security:
+        - apiKey: []
+          bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ContentProfile'
