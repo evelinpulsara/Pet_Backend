@@ -101,3 +101,11 @@ paths:
         que necesita (evita over-fetching) e incluye el collar en la misma
         petición (evita un segundo round-trip).
       security:
+        - apiKey: []
+          bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/AcceptProfile'
+        - name: select
+          in: query
+          schema: { type: string, example: 'id,name,species,tracker_devices(device_uid)' }
+      responses:
