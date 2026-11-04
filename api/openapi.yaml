@@ -92,3 +92,12 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Error' }
 
+  /pets:
+    get:
+      tags: [App]
+      summary: Mascotas del usuario que inició sesión
+      description: |
+        REST orientado a recursos. Con `select` el cliente pide solo las columnas
+        que necesita (evita over-fetching) e incluye el collar en la misma
+        petición (evita un segundo round-trip).
+      security:
