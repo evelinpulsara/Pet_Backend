@@ -119,3 +119,12 @@ paths:
         '401':
           description: Sin sesión (Row Level Security niega el acceso).
 
+  /location_history:
+    get:
+      tags: [App]
+      summary: Historial de ubicaciones de una mascota
+      security:
+        - apiKey: []
+          bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/AcceptProfile'
