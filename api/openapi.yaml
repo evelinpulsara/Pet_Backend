@@ -139,3 +139,12 @@ paths:
           in: query
           schema: { type: integer, example: 300 }
       responses:
+        '200':
+          description: Ubicaciones (la app las valida antes de usarlas)
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/LocationRow' }
+
+components:
