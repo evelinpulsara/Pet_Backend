@@ -133,3 +133,9 @@ paths:
           required: true
           schema: { type: string, example: 'eq.3f2b6c1e-...' }
         - name: order
+          in: query
+          schema: { type: string, example: 'recorded_at.desc' }
+        - name: limit
+          in: query
+          schema: { type: integer, example: 300 }
+      responses:
