@@ -148,3 +148,14 @@ paths:
                 items: { $ref: '#/components/schemas/LocationRow' }
 
 components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: apikey
+      description: Clave pública (publishable) del proyecto de Supabase.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Token de sesión del dueño (Supabase Auth).
+  parameters:
