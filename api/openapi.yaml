@@ -159,3 +159,14 @@ components:
       scheme: bearer
       description: Token de sesión del dueño (Supabase Auth).
   parameters:
+    ContentProfile:
+      name: Content-Profile
+      in: header
+      required: true
+      schema: { type: string, enum: [pettracker] }
+    AcceptProfile:
+      name: Accept-Profile
+      in: header
+      required: true
+      schema: { type: string, enum: [pettracker] }
+  schemas:
