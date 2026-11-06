@@ -183,3 +183,14 @@ components:
         p_speed: { type: number, minimum: 0, description: km/h }
         p_recorded_at: { type: string, format: date-time, description: 'Si no se envía, se usa la hora del servidor' }
     Pet:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        species: { type: string }
+        breed: { type: string, nullable: true }
+        age_years: { type: integer, nullable: true }
+        weight_kg: { type: number, nullable: true }
+        color_argb: { type: integer, format: int64 }
+        daily_goal_m: { type: number }
+        status: { type: string, enum: [home, away, lost, found, inactive] }
