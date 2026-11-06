@@ -170,3 +170,11 @@ components:
       required: true
       schema: { type: string, enum: [pettracker] }
   schemas:
+    ReportLocationRequest:
+      type: object
+      required: [p_device_uid, p_device_key, p_lat, p_lon]
+      properties:
+        p_device_uid: { type: string, maxLength: 100, description: Código del collar }
+        p_device_key: { type: string, description: Clave secreta del collar }
+        p_lat: { type: number, minimum: -90, maximum: 90 }
+        p_lon: { type: number, minimum: -180, maximum: 180 }
