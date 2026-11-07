@@ -216,3 +216,5 @@ components:
       properties:
         code: { type: string }
         message: { type: string }
+        details: { type: string, nullable: true }
+        hint: { type: string, nullable: true }
