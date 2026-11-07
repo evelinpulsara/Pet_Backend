@@ -201,3 +201,14 @@ components:
             properties:
               device_uid: { type: string }
     LocationRow:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        pet_id: { type: string, format: uuid }
+        recorded_at: { type: string, format: date-time }
+        latitude: { type: number }
+        longitude: { type: number }
+        accuracy_m: { type: number, nullable: true }
+        speed_kmh: { type: number, nullable: true }
+        battery_pct: { type: integer, nullable: true }
+    Error:
