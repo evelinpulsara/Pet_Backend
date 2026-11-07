@@ -194,3 +194,10 @@ components:
         color_argb: { type: integer, format: int64 }
         daily_goal_m: { type: number }
         status: { type: string, enum: [home, away, lost, found, inactive] }
+        tracker_devices:
+          type: array
+          items:
+            type: object
+            properties:
+              device_uid: { type: string }
+    LocationRow:
