@@ -212,3 +212,7 @@ components:
         speed_kmh: { type: number, nullable: true }
         battery_pct: { type: integer, nullable: true }
     Error:
+      type: object
+      properties:
+        code: { type: string }
+        message: { type: string }
