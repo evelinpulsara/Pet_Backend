@@ -40,3 +40,24 @@ CREATE TABLE IF NOT EXISTS pettracker.profiles (
 );
 COMMENT ON TABLE pettracker.profiles IS 'Dueños de mascotas de PetTracker (perfil ligado a auth.users).';
 
+-- Mascotas
+CREATE TABLE IF NOT EXISTS pettracker.pets (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    owner_id        UUID        NOT NULL DEFAULT auth.uid() REFERENCES pettracker.profiles(id) ON DELETE CASCADE,
+    name            VARCHAR(100) NOT NULL,
+    species         VARCHAR(50)  NOT NULL,          -- Texto libre: 'Perro', 'Gato', 'Otro'...
+    breed           VARCHAR(100),
+    age_years       SMALLINT,
+    weight_kg       NUMERIC(5, 2),
+    color_argb      BIGINT,                          -- Color de la mascota en la app (0xAARRGGBB)
+    photo_url       VARCHAR(500),                    -- Foto en Supabase Storage (no en la BD)
+    daily_goal_m    NUMERIC(8, 1) NOT NULL DEFAULT 3000,
+    status          VARCHAR(20) NOT NULL DEFAULT 'home',
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT pet_name_not_empty CHECK (char_length(trim(name)) > 0),
+    CONSTRAINT pet_age_range      CHECK (age_years IS NULL OR age_years BETWEEN 0 AND 60),
+    CONSTRAINT pet_weight_pos     CHECK (weight_kg IS NULL OR weight_kg > 0),
+    CONSTRAINT pet_status_values  CHECK (status IN ('home', 'away', 'lost', 'found', 'inactive'))
+);
+
