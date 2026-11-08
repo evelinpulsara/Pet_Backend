@@ -25,3 +25,18 @@ CREATE SCHEMA IF NOT EXISTS pettracker;
 CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA extensions;
 
 -- ====================================================================
+--  TABLAS
+-- ====================================================================
+
+-- Perfil del dueño (1:1 con auth.users de Supabase).
+CREATE TABLE IF NOT EXISTS pettracker.profiles (
+    id          UUID        PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    full_name   VARCHAR(150),
+    phone       VARCHAR(25),                      -- Aparece en el cartel de "Se busca"
+    language    VARCHAR(5)  NOT NULL DEFAULT 'es',
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT profile_language CHECK (language IN ('es', 'en'))
+);
+COMMENT ON TABLE pettracker.profiles IS 'Dueños de mascotas de PetTracker (perfil ligado a auth.users).';
+
