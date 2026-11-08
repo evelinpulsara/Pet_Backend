@@ -21,3 +21,7 @@
 
 CREATE SCHEMA IF NOT EXISTS pettracker;
 
+-- pgcrypto ya viene en Supabase (esquema `extensions`). Solo por si acaso:
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA extensions;
+
+-- ====================================================================
