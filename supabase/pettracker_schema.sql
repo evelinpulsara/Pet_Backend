@@ -94,3 +94,20 @@ CREATE TABLE IF NOT EXISTS pettracker.location_history (
     CONSTRAINT loc_longitude_range CHECK (longitude BETWEEN -180 AND 180),
     CONSTRAINT loc_battery_range   CHECK (battery_pct IS NULL OR battery_pct BETWEEN 0 AND 100)
 );
+
+-- Zonas seguras (varias por mascota; is_home marca "Casa")
+CREATE TABLE IF NOT EXISTS pettracker.safe_zones (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID        NOT NULL REFERENCES pettracker.pets(id) ON DELETE CASCADE,
+    name            VARCHAR(100) NOT NULL,
+    center_lat      NUMERIC(10, 7) NOT NULL,
+    center_lon      NUMERIC(10, 7) NOT NULL,
+    radius_m        NUMERIC(8, 2) NOT NULL,
+    is_home         BOOLEAN     NOT NULL DEFAULT FALSE,
+    is_active       BOOLEAN     NOT NULL DEFAULT TRUE,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT zone_lat_range    CHECK (center_lat BETWEEN -90  AND 90),
+    CONSTRAINT zone_lon_range    CHECK (center_lon BETWEEN -180 AND 180),
+    CONSTRAINT zone_radius_range CHECK (radius_m BETWEEN 10 AND 50000)
+);
