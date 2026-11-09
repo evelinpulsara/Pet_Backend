@@ -111,3 +111,20 @@ CREATE TABLE IF NOT EXISTS pettracker.safe_zones (
     CONSTRAINT zone_lon_range    CHECK (center_lon BETWEEN -180 AND 180),
     CONSTRAINT zone_radius_range CHECK (radius_m BETWEEN 10 AND 50000)
 );
+
+-- Alertas (mismos tipos que la app)
+CREATE TABLE IF NOT EXISTS pettracker.alerts (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID        NOT NULL REFERENCES pettracker.pets(id) ON DELETE CASCADE,
+    alert_type      VARCHAR(40) NOT NULL,
+    params          JSONB       NOT NULL DEFAULT '{}'::jsonb,  -- Datos para armar el texto en cada idioma
+    message         TEXT        NOT NULL,
+    latitude        NUMERIC(10, 7),
+    longitude       NUMERIC(10, 7),
+    is_resolved     BOOLEAN     NOT NULL DEFAULT FALSE,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT alert_type_values CHECK (alert_type IN (
+        'leftSafeZone', 'enteredSafeZone', 'lowBattery', 'gpsLost',
+        'trackerDisconnected', 'anomaly', 'healthReminder'))
+);
+
