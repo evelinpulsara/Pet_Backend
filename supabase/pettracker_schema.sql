@@ -61,3 +61,21 @@ CREATE TABLE IF NOT EXISTS pettracker.pets (
     CONSTRAINT pet_status_values  CHECK (status IN ('home', 'away', 'lost', 'found', 'inactive'))
 );
 
+-- Collares GPS (uno activo por mascota)
+CREATE TABLE IF NOT EXISTS pettracker.tracker_devices (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID        NOT NULL REFERENCES pettracker.pets(id) ON DELETE CASCADE,
+    device_uid      VARCHAR(100) NOT NULL UNIQUE,   -- Código del collar, ej. 'TRK-1001'
+    device_key_hash VARCHAR(64),                    -- SHA-256 de la clave secreta del collar
+    battery_level   SMALLINT,
+    is_online       BOOLEAN     NOT NULL DEFAULT FALSE,
+    power_save      BOOLEAN     NOT NULL DEFAULT FALSE,
+    signal          SMALLINT,                       -- 0..4
+    last_seen_at    TIMESTAMPTZ,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT device_battery_range CHECK (battery_level IS NULL OR battery_level BETWEEN 0 AND 100),
+    CONSTRAINT device_signal_range  CHECK (signal IS NULL OR signal BETWEEN 0 AND 4)
+);
+COMMENT ON COLUMN pettracker.tracker_devices.device_key_hash IS
+  'El collar se identifica con device_uid + una clave secreta. Solo se guarda el hash.';
+
