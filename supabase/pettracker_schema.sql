@@ -79,3 +79,18 @@ CREATE TABLE IF NOT EXISTS pettracker.tracker_devices (
 COMMENT ON COLUMN pettracker.tracker_devices.device_key_hash IS
   'El collar se identifica con device_uid + una clave secreta. Solo se guarda el hash.';
 
+-- Historial de ubicaciones (lo envía el collar)
+CREATE TABLE IF NOT EXISTS pettracker.location_history (
+    id              BIGSERIAL   PRIMARY KEY,
+    pet_id          UUID        NOT NULL REFERENCES pettracker.pets(id) ON DELETE CASCADE,
+    device_id       UUID        REFERENCES pettracker.tracker_devices(id) ON DELETE SET NULL,
+    recorded_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    latitude        NUMERIC(10, 7) NOT NULL,
+    longitude       NUMERIC(10, 7) NOT NULL,
+    accuracy_m      NUMERIC(6, 2),
+    speed_kmh       NUMERIC(6, 2),
+    battery_pct     SMALLINT,
+    CONSTRAINT loc_latitude_range  CHECK (latitude  BETWEEN -90  AND 90),
+    CONSTRAINT loc_longitude_range CHECK (longitude BETWEEN -180 AND 180),
+    CONSTRAINT loc_battery_range   CHECK (battery_pct IS NULL OR battery_pct BETWEEN 0 AND 100)
+);
