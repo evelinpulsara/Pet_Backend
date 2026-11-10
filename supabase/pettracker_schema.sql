@@ -139,3 +139,17 @@ CREATE TABLE IF NOT EXISTS pettracker.emergency_contacts (
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+-- Carnet de salud: vacunas, desparasitación, citas y medicamentos
+CREATE TABLE IF NOT EXISTS pettracker.health_records (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID        NOT NULL REFERENCES pettracker.pets(id) ON DELETE CASCADE,
+    record_type     VARCHAR(20) NOT NULL,
+    title           VARCHAR(150) NOT NULL,
+    record_date     DATE        NOT NULL,
+    next_due_date   DATE,                    -- Para los recordatorios
+    notes           TEXT,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT health_type_values CHECK (record_type IN ('vaccine', 'deworming', 'vet', 'medication'))
+);
+
