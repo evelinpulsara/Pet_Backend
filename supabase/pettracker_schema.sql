@@ -164,3 +164,12 @@ CREATE TABLE IF NOT EXISTS pettracker.walks (
     CONSTRAINT walk_dates CHECK (ended_at IS NULL OR ended_at >= started_at)
 );
 
+-- Actividad por día
+CREATE TABLE IF NOT EXISTS pettracker.daily_activity (
+    pet_id          UUID        NOT NULL REFERENCES pettracker.pets(id) ON DELETE CASCADE,
+    day             DATE        NOT NULL,
+    distance_m      NUMERIC(10, 1) NOT NULL DEFAULT 0,
+    active_seconds  INTEGER     NOT NULL DEFAULT 0,
+    PRIMARY KEY (pet_id, day)
+);
+
