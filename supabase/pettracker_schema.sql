@@ -153,3 +153,14 @@ CREATE TABLE IF NOT EXISTS pettracker.health_records (
     CONSTRAINT health_type_values CHECK (record_type IN ('vaccine', 'deworming', 'vet', 'medication'))
 );
 
+-- Paseos grabados
+CREATE TABLE IF NOT EXISTS pettracker.walks (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID        NOT NULL REFERENCES pettracker.pets(id) ON DELETE CASCADE,
+    started_at      TIMESTAMPTZ NOT NULL,
+    ended_at        TIMESTAMPTZ,
+    distance_m      NUMERIC(10, 1) NOT NULL DEFAULT 0,
+    route           JSONB       NOT NULL DEFAULT '[]'::jsonb,   -- [{lat, lng, acc, t}, ...]
+    CONSTRAINT walk_dates CHECK (ended_at IS NULL OR ended_at >= started_at)
+);
+
