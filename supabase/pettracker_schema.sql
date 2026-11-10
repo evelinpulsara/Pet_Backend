@@ -128,3 +128,14 @@ CREATE TABLE IF NOT EXISTS pettracker.alerts (
         'trackerDisconnected', 'anomaly', 'healthReminder'))
 );
 
+-- Contactos de emergencia
+CREATE TABLE IF NOT EXISTS pettracker.emergency_contacts (
+    id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id          UUID        NOT NULL REFERENCES pettracker.pets(id) ON DELETE CASCADE,
+    full_name       VARCHAR(150) NOT NULL,
+    relationship    VARCHAR(80),
+    phone           VARCHAR(25) NOT NULL,
+    is_primary      BOOLEAN     NOT NULL DEFAULT FALSE,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
