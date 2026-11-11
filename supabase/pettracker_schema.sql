@@ -173,3 +173,21 @@ CREATE TABLE IF NOT EXISTS pettracker.daily_activity (
     PRIMARY KEY (pet_id, day)
 );
 
+-- Reportes de mascota perdida (modo búsqueda + cartel "Se busca")
+CREATE TABLE IF NOT EXISTS pettracker.lost_pet_reports (
+    id                  UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    pet_id              UUID        NOT NULL REFERENCES pettracker.pets(id) ON DELETE CASCADE,
+    is_manual           BOOLEAN     NOT NULL DEFAULT FALSE,   -- TRUE = el dueño activó "se perdió"
+    reported_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    last_seen_lat       NUMERIC(10, 7),
+    last_seen_lon       NUMERIC(10, 7),
+    last_seen_zone      VARCHAR(100),
+    poster_headline     TEXT,
+    poster_description  TEXT,
+    is_found            BOOLEAN     NOT NULL DEFAULT FALSE,
+    found_at            TIMESTAMPTZ,
+    updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT lost_found_consistency CHECK (
+        (is_found = FALSE AND found_at IS NULL) OR (is_found = TRUE AND found_at IS NOT NULL))
+);
+
