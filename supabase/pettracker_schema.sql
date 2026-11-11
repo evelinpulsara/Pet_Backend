@@ -204,3 +204,27 @@ CREATE INDEX IF NOT EXISTS idx_health_pet_due        ON pettracker.health_record
 CREATE INDEX IF NOT EXISTS idx_walks_pet_time        ON pettracker.walks(pet_id, started_at DESC);
 CREATE INDEX IF NOT EXISTS idx_lost_reports_pet      ON pettracker.lost_pet_reports(pet_id, reported_at DESC);
 
+-- ====================================================================
+--  FUNCIONES Y TRIGGERS
+-- ====================================================================
+
+-- updated_at automático
+CREATE OR REPLACE FUNCTION pettracker.fn_update_updated_at()
+RETURNS TRIGGER LANGUAGE plpgsql SET search_path = '' AS $$
+BEGIN
+    NEW.updated_at := NOW();
+    RETURN NEW;
+END;
+$$;
+
+DO $$
+DECLARE t TEXT;
+BEGIN
+    FOREACH t IN ARRAY ARRAY['profiles', 'pets', 'safe_zones', 'health_records', 'lost_pet_reports'] LOOP
+        EXECUTE format('DROP TRIGGER IF EXISTS trg_%1$s_updated_at ON pettracker.%1$I', t);
+        EXECUTE format('CREATE TRIGGER trg_%1$s_updated_at BEFORE UPDATE ON pettracker.%1$I
+                        FOR EACH ROW EXECUTE FUNCTION pettracker.fn_update_updated_at()', t);
+    END LOOP;
+END;
+$$;
+
