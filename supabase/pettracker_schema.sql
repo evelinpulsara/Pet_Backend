@@ -191,3 +191,16 @@ CREATE TABLE IF NOT EXISTS pettracker.lost_pet_reports (
         (is_found = FALSE AND found_at IS NULL) OR (is_found = TRUE AND found_at IS NOT NULL))
 );
 
+-- ====================================================================
+--  ÍNDICES
+-- ====================================================================
+CREATE INDEX IF NOT EXISTS idx_pets_owner            ON pettracker.pets(owner_id);
+CREATE INDEX IF NOT EXISTS idx_devices_pet           ON pettracker.tracker_devices(pet_id);
+CREATE INDEX IF NOT EXISTS idx_location_pet_time     ON pettracker.location_history(pet_id, recorded_at DESC);
+CREATE INDEX IF NOT EXISTS idx_zones_pet             ON pettracker.safe_zones(pet_id);
+CREATE INDEX IF NOT EXISTS idx_alerts_pet_time       ON pettracker.alerts(pet_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_contacts_pet          ON pettracker.emergency_contacts(pet_id);
+CREATE INDEX IF NOT EXISTS idx_health_pet_due        ON pettracker.health_records(pet_id, next_due_date);
+CREATE INDEX IF NOT EXISTS idx_walks_pet_time        ON pettracker.walks(pet_id, started_at DESC);
+CREATE INDEX IF NOT EXISTS idx_lost_reports_pet      ON pettracker.lost_pet_reports(pet_id, reported_at DESC);
+
