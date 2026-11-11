@@ -228,3 +228,9 @@ BEGIN
 END;
 $$;
 
+-- ¿La mascota es del usuario que está conectado? (lo usan las políticas RLS)
+CREATE OR REPLACE FUNCTION pettracker.owns_pet(p_pet_id UUID)
+RETURNS BOOLEAN LANGUAGE sql STABLE SECURITY DEFINER SET search_path = '' AS $$
+    SELECT EXISTS (SELECT 1 FROM pettracker.pets p WHERE p.id = p_pet_id AND p.owner_id = auth.uid());
+$$;
+
