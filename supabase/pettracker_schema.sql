@@ -249,3 +249,8 @@ BEGIN
 END;
 $$;
 
+DROP TRIGGER IF EXISTS pettracker_on_auth_user_created ON auth.users;
+CREATE TRIGGER pettracker_on_auth_user_created
+    AFTER INSERT ON auth.users
+    FOR EACH ROW EXECUTE FUNCTION pettracker.handle_new_user();
+
