@@ -254,3 +254,18 @@ CREATE TRIGGER pettracker_on_auth_user_created
     AFTER INSERT ON auth.users
     FOR EACH ROW EXECUTE FUNCTION pettracker.handle_new_user();
 
+-- El dueño le pone (o cambia) la clave secreta a su collar.
+CREATE OR REPLACE FUNCTION pettracker.set_device_key(p_device_uid TEXT, p_key TEXT)
+RETURNS VOID LANGUAGE plpgsql SECURITY DEFINER SET search_path = '' AS $$
+BEGIN
+    IF length(p_key) < 12 THEN
+        RAISE EXCEPTION 'La clave del collar debe tener al menos 12 caracteres';
+    END IF;
+    UPDATE pettracker.tracker_devices d
+       SET device_key_hash = encode(extensions.digest(p_key, 'sha256'), 'hex')
+     WHERE d.device_uid = p_device_uid AND pettracker.owns_pet(d.pet_id);
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Collar no encontrado o no es tuyo';
+    END IF;
+END;
+$$;
