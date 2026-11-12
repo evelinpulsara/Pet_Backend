@@ -234,3 +234,18 @@ RETURNS BOOLEAN LANGUAGE sql STABLE SECURITY DEFINER SET search_path = '' AS $$
     SELECT EXISTS (SELECT 1 FROM pettracker.pets p WHERE p.id = p_pet_id AND p.owner_id = auth.uid());
 $$;
 
+-- Crea el perfil cuando alguien se registra DESDE PetTracker.
+-- Solo actúa si al registrarse se envió metadata app = 'pettracker'
+-- (acordado con las otras apps del proyecto: no tocamos sus usuarios).
+CREATE OR REPLACE FUNCTION pettracker.handle_new_user()
+RETURNS TRIGGER LANGUAGE plpgsql SECURITY DEFINER SET search_path = '' AS $$
+BEGIN
+    IF NEW.raw_user_meta_data->>'app' = 'pettracker' THEN
+        INSERT INTO pettracker.profiles (id, full_name)
+        VALUES (NEW.id, COALESCE(NEW.raw_user_meta_data->>'full_name', split_part(NEW.email, '@', 1)))
+        ON CONFLICT (id) DO NOTHING;
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
