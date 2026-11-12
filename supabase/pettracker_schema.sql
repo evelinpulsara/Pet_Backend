@@ -269,3 +269,17 @@ BEGIN
     END IF;
 END;
 $$;
+
+-- ENTRADA PARA EL COLLAR GPS REAL (por ejemplo, un Arduino con Wi-Fi/GSM):
+--   POST {SUPABASE_URL}/rest/v1/rpc/report_location
+--   Headers: apikey: <clave pública>, Content-Type: application/json,
+--            Content-Profile: pettracker
+--   Body: {"p_device_uid":"TRK-1001","p_device_key":"...","p_lat":1.2136,
+--          "p_lon":-77.2811,"p_accuracy":5,"p_battery":87}
+-- El collar no necesita usuario: se valida con su código y su clave secreta.
+CREATE OR REPLACE FUNCTION pettracker.report_location(
+    p_device_uid TEXT, p_device_key TEXT,
+    p_lat NUMERIC, p_lon NUMERIC,
+    p_accuracy NUMERIC DEFAULT NULL, p_battery SMALLINT DEFAULT NULL,
+    p_speed NUMERIC DEFAULT NULL, p_recorded_at TIMESTAMPTZ DEFAULT NOW())
+RETURNS BIGINT LANGUAGE plpgsql SECURITY DEFINER SET search_path = '' AS $$
