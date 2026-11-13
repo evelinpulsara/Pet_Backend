@@ -283,3 +283,23 @@ CREATE OR REPLACE FUNCTION pettracker.report_location(
     p_accuracy NUMERIC DEFAULT NULL, p_battery SMALLINT DEFAULT NULL,
     p_speed NUMERIC DEFAULT NULL, p_recorded_at TIMESTAMPTZ DEFAULT NOW())
 RETURNS BIGINT LANGUAGE plpgsql SECURITY DEFINER SET search_path = '' AS $$
+DECLARE
+    v_device pettracker.tracker_devices%ROWTYPE;
+    v_id BIGINT;
+BEGIN
+    SELECT * INTO v_device FROM pettracker.tracker_devices
+     WHERE device_uid = p_device_uid
+       AND device_key_hash IS NOT NULL
+       AND device_key_hash = encode(extensions.digest(p_device_key, 'sha256'), 'hex');
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Collar no autorizado';
+    END IF;
+    INSERT INTO pettracker.location_history (pet_id, device_id, recorded_at, latitude, longitude, accuracy_m, speed_kmh, battery_pct)
+    VALUES (v_device.pet_id, v_device.id, p_recorded_at, p_lat, p_lon, p_accuracy, p_speed, p_battery)
+    RETURNING id INTO v_id;
+    UPDATE pettracker.tracker_devices
+       SET is_online = TRUE, last_seen_at = p_recorded_at, battery_level = COALESCE(p_battery, battery_level)
+     WHERE id = v_device.id;
+    RETURN v_id;
+END;
+$$;
