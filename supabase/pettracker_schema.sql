@@ -319,3 +319,11 @@ ALTER TABLE pettracker.walks              ENABLE ROW LEVEL SECURITY;
 ALTER TABLE pettracker.daily_activity     ENABLE ROW LEVEL SECURITY;
 ALTER TABLE pettracker.lost_pet_reports   ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS pol_profiles_own ON pettracker.profiles;
+CREATE POLICY pol_profiles_own ON pettracker.profiles
+    FOR ALL TO authenticated USING (id = auth.uid()) WITH CHECK (id = auth.uid());
+
+DROP POLICY IF EXISTS pol_pets_own ON pettracker.pets;
+CREATE POLICY pol_pets_own ON pettracker.pets
+    FOR ALL TO authenticated USING (owner_id = auth.uid()) WITH CHECK (owner_id = auth.uid());
+
