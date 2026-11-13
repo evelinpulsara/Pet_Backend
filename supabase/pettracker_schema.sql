@@ -327,3 +327,17 @@ DROP POLICY IF EXISTS pol_pets_own ON pettracker.pets;
 CREATE POLICY pol_pets_own ON pettracker.pets
     FOR ALL TO authenticated USING (owner_id = auth.uid()) WITH CHECK (owner_id = auth.uid());
 
+-- Todas las tablas que cuelgan de una mascota usan la misma regla.
+DO $$
+DECLARE t TEXT;
+BEGIN
+    FOREACH t IN ARRAY ARRAY['tracker_devices', 'location_history', 'safe_zones', 'alerts',
+                             'emergency_contacts', 'health_records', 'walks', 'daily_activity',
+                             'lost_pet_reports'] LOOP
+        EXECUTE format('DROP POLICY IF EXISTS pol_%1$s_own ON pettracker.%1$I', t);
+        EXECUTE format('CREATE POLICY pol_%1$s_own ON pettracker.%1$I FOR ALL TO authenticated
+                        USING (pettracker.owns_pet(pet_id)) WITH CHECK (pettracker.owns_pet(pet_id))', t);
+    END LOOP;
+END;
+$$;
+
