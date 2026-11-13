@@ -303,3 +303,19 @@ BEGIN
     RETURN v_id;
 END;
 $$;
+
+-- ====================================================================
+--  ROW LEVEL SECURITY: cada dueño solo ve lo suyo
+-- ====================================================================
+ALTER TABLE pettracker.profiles           ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pettracker.pets               ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pettracker.tracker_devices    ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pettracker.location_history   ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pettracker.safe_zones         ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pettracker.alerts             ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pettracker.emergency_contacts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pettracker.health_records     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pettracker.walks              ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pettracker.daily_activity     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pettracker.lost_pet_reports   ENABLE ROW LEVEL SECURITY;
+
