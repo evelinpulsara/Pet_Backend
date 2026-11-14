@@ -356,3 +356,23 @@ BEGIN
 END;
 $$;
 
+-- ====================================================================
+--  PERMISOS para la API de Supabase
+-- ====================================================================
+GRANT USAGE ON SCHEMA pettracker TO anon, authenticated, service_role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA pettracker TO authenticated;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA pettracker TO authenticated;
+GRANT ALL ON ALL TABLES IN SCHEMA pettracker TO service_role;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA pettracker TO service_role;
+
+-- Funciones: por defecto nadie las ejecuta; se habilitan una por una.
+REVOKE EXECUTE ON ALL FUNCTIONS IN SCHEMA pettracker FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION pettracker.owns_pet(UUID) TO authenticated;
+GRANT EXECUTE ON FUNCTION pettracker.set_device_key(TEXT, TEXT) TO authenticated;
+-- El collar entra sin usuario (con la clave pública) solo por esta función:
+GRANT EXECUTE ON FUNCTION pettracker.report_location(TEXT, TEXT, NUMERIC, NUMERIC, NUMERIC, SMALLINT, NUMERIC, TIMESTAMPTZ)
+    TO anon, authenticated;
+GRANT EXECUTE ON FUNCTION pettracker.fn_update_updated_at() TO authenticated, service_role;
+GRANT EXECUTE ON FUNCTION pettracker.handle_new_user() TO supabase_auth_admin;
+GRANT USAGE ON SCHEMA pettracker TO supabase_auth_admin;
+GRANT INSERT ON pettracker.profiles TO supabase_auth_admin;
