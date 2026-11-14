@@ -24,6 +24,22 @@ Seguridad: cada tabla tiene Row Level Security; cada dueño solo ve sus mascotas
 Al registrarse desde PetTracker se envía `app: 'pettracker'` en la metadata del usuario
 y se crea su perfil en `pettracker.profiles` (las otras apps no se ven afectadas).
 
+### Collar GPS (por ejemplo, con Arduino)
+El collar envía su ubicación sin iniciar sesión, validándose con su código y una clave secreta
+que el dueño le asigna desde la app (`pettracker.set_device_key`):
+
+```
+POST https://TU-PROYECTO.supabase.co/rest/v1/rpc/report_location
+apikey: <clave pública>
+Content-Type: application/json
+Content-Profile: pettracker
+
+{"p_device_uid":"TRK-1001","p_device_key":"clave-secreta","p_lat":1.2136,"p_lon":-77.2811,"p_accuracy":5,"p_battery":87}
+```
+
+> Los archivos de `sql/` y `spring-config/` son el diseño original para Spring Boot + Flyway.
+> Para Supabase se usa `supabase/pettracker_schema.sql`.
+
 
 ## Estructura
 
