@@ -341,3 +341,18 @@ BEGIN
 END;
 $$;
 
+-- ====================================================================
+--  TIEMPO REAL (WebSocket): Supabase Realtime avisa a la app cada vez
+--  que el collar guarda una ubicación nueva. Solo se publica ESTA tabla.
+--  Las reglas RLS también se aplican aquí: cada dueño recibe solo lo suyo.
+-- ====================================================================
+DO $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM pg_publication WHERE pubname = 'supabase_realtime')
+       AND NOT EXISTS (SELECT 1 FROM pg_publication_tables
+                       WHERE pubname = 'supabase_realtime' AND schemaname = 'pettracker' AND tablename = 'location_history') THEN
+        ALTER PUBLICATION supabase_realtime ADD TABLE pettracker.location_history;
+    END IF;
+END;
+$$;
+
