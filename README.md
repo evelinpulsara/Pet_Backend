@@ -40,7 +40,6 @@ Content-Profile: pettracker
 > Los archivos de `sql/` y `spring-config/` son el diseño original para Spring Boot + Flyway.
 > Para Supabase se usa `supabase/pettracker_schema.sql`.
 
-
 ## Estructura
 
 ```
