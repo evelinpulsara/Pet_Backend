@@ -5,6 +5,41 @@ El frontend (Flutter) vive en otro repositorio: https://github.com/evelinpulsara
 
 **Stack:** Spring Boot 3.3.x · Java 21 · PostgreSQL 15+ · Flyway · JWT
 
+## Servidor (Spring Boot) — se despliega en Render
+
+Hace de intermediario seguro entre la app (Vercel) y los servicios externos:
+
+| Endpoint | Qué hace |
+|---|---|
+| `GET /api/health` | Estado del servicio (Render lo usa para saber si está vivo) |
+| `POST /api/ai/lost-alert` | La IA escribe el aviso para el dueño y el mensaje de WhatsApp |
+| `POST /api/ai/poster` | La IA escribe el cartel de "Se busca" |
+| `POST /api/ai/day-summary/stream` | Resumen del día por **SSE** (`text/event-stream`) |
+| `POST /api/collar/location` | El collar GPS (Arduino) envía su ubicación; se valida y se guarda en Supabase |
+
+- La clave de Gemini vive **solo aquí** (variable `GEMINI_API_KEY`), nunca en la app.
+- **CORS:** solo acepta pedidos del navegador que vengan del frontend (variable `CORS_ORIGINS`).
+- Límite de pedidos de IA por IP (protege la clave de abusos).
+- Validación de datos de entrada con Bean Validation.
+
+**Correr en local:** `GEMINI_API_KEY=... mvn spring-boot:run` → http://localhost:8080/api/health
+**Pruebas:** `mvn test`
+
+**Variables de entorno en Render:**
+
+| Variable | Valor |
+|---|---|
+| `GEMINI_API_KEY` | Clave de Google AI Studio (secreta) |
+| `CORS_ORIGINS` | URL del frontend en Vercel, ej. `https://controllerpet.vercel.app` (varias separadas por coma) |
+
+Ejemplo del collar:
+```
+POST https://TU-BACKEND.onrender.com/api/collar/location
+Content-Type: application/json
+
+{"deviceUid":"TRK-1001","deviceKey":"clave-secreta-123","lat":1.2136,"lon":-77.2811,"accuracy":5,"battery":87}
+```
+
 ## Base de datos en Supabase (la que se usa ahora)
 
 El proyecto de Supabase se comparte con otras apps; cada una vive en su propio esquema:
