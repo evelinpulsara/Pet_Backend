@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
-/** Respuestas de error claras y en el mismo formato. */
 @RestControllerAdvice
 public class ApiExceptionHandler {
 

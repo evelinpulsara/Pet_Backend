@@ -24,21 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-/**
- * Entrada del COLLAR GPS (por ejemplo un Arduino con Wi-Fi o GSM).
- *
- *   POST /api/collar/location
- *   {"deviceUid":"TRK-1001","deviceKey":"clave-secreta-123","lat":1.2136,"lon":-77.2811,"accuracy":5,"battery":87}
- *
- * Valida los datos y los guarda en Supabase con la función report_location,
- * que comprueba el código y la clave del collar. La app se entera al instante
- * por WebSocket (Supabase Realtime).
- */
 @RestController
 @RequestMapping("/api/collar")
 public class CollarController {
 
-    /** Lo que envía el collar (validado al llegar). */
     public record LocationReport(
             @NotBlank @Size(max = 100) String deviceUid,
             @NotBlank @Size(min = 12, max = 200) String deviceKey,

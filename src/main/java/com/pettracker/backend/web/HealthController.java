@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/** Estado del servicio (Render lo usa para saber si está vivo). */
 @RestController
 public class HealthController {
     private final AppProperties props;
