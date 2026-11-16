@@ -1,0 +1,13 @@
+# Blueprint de Render para el backend de PetTracker.
+services:
+  - type: web
+    name: pettracker-backend
+    runtime: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /api/health
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false          # se escribe a mano en Render (secreto)
+      - key: CORS_ORIGINS
+        sync: false          # la URL del frontend en Vercel, ej: https://controllerpet.vercel.app
