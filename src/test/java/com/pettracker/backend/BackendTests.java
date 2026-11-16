@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-/** Pruebas sin internet: Gemini sin clave (usa respaldo) y validación de datos. */
 @SpringBootTest(properties = {"app.gemini-api-key=", "app.cors-origins=https://pettracker.vercel.app"})
 @AutoConfigureMockMvc
 class BackendTests {
