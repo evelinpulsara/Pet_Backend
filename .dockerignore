@@ -1,0 +1,8 @@
+target/
+.git/
+*.md
+sql/
+spring-config/
+supabase/
+docs/
+api/
