@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Component;
 
-/** Límite sencillo de pedidos por IP y por minuto (en memoria). */
 @Component
 public class RateLimiter {
     private final Map<String, Deque<Long>> hits = new ConcurrentHashMap<>();
