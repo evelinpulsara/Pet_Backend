@@ -12,10 +12,6 @@ import java.util.Locale;
 import java.util.function.Consumer;
 import org.springframework.stereotype.Service;
 
-/**
- * La IA de PetTracker: arma las instrucciones (prompts) para Gemini y, si la IA
- * no responde, devuelve textos de respaldo para que la app nunca se quede sin respuesta.
- */
 @Service
 public class PetAiService {
     private final GeminiClient gemini;
@@ -46,7 +42,6 @@ public class PetAiService {
         }
     }
 
-    // ── Aviso de mascota perdida ──────────────────────────────────────────────
     public LostPetResponse lostPet(LostPetRequest r) {
         String prompt = """
                 Eres el asistente de emergencias de PetTracker, una app que rastrea mascotas con un collar GPS.
@@ -95,7 +90,6 @@ public class PetAiService {
                         false);
     }
 
-    // ── Cartel de "Se busca" ──────────────────────────────────────────────────
     public PosterResponse poster(LostPetRequest r) {
         String prompt = """
                 Escribe el texto de un cartel de "Se busca" para una mascota perdida, en %s.
@@ -122,7 +116,6 @@ public class PetAiService {
                         false);
     }
 
-    // ── Resumen del día ───────────────────────────────────────────────────────
     private String summaryPrompt(DaySummaryRequest d) {
         List<String> places = d.placesVisited() == null ? List.of() : d.placesVisited();
         List<String> unusual = d.unusual() == null ? List.of() : d.unusual();
@@ -167,7 +160,6 @@ public class PetAiService {
                 .orElseGet(() -> new DaySummaryResponse(summaryFallback(d), false));
     }
 
-    /** Resumen por partes (SSE). Devuelve false si no hubo IA (se usará el respaldo). */
     public boolean daySummaryStream(DaySummaryRequest d, Consumer<String> onText) {
         return gemini.stream(summaryPrompt(d), onText);
     }

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-/** Endpoints de IA que usa la app (la clave de Gemini nunca sale del servidor). */
 @RestController
 @RequestMapping("/api/ai")
 public class AiController {
@@ -33,7 +32,6 @@ public class AiController {
         this.limiter = limiter;
     }
 
-    /** Límite de pedidos por IP (detrás del proxy de Render, la IP real va en X-Forwarded-For). */
     private void checkLimit(HttpServletRequest req) {
         String fwd = req.getHeader("X-Forwarded-For");
         String ip = fwd != null && !fwd.isBlank() ? fwd.split(",")[0].trim() : req.getRemoteAddr();
@@ -60,10 +58,6 @@ public class AiController {
         return ai.daySummary(d);
     }
 
-    /**
-     * Resumen del día por SSE (Server-Sent Events, text/event-stream):
-     * cada evento "message" trae {"text": texto acumulado}; al final llega el evento "done".
-     */
     @PostMapping(value = "/day-summary/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter daySummaryStream(@Valid @RequestBody DaySummaryRequest d, HttpServletRequest req) {
         checkLimit(req);

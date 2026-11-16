@@ -9,11 +9,9 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.List;
 
-/** Datos que la app envía a los endpoints de IA (validados al llegar). */
 public final class AiDtos {
     private AiDtos() {}
 
-    /** Mascota que salió de su zona (o que el dueño reportó como perdida). */
     public record LostPetRequest(
             @NotBlank @Size(max = 60) String petName,
             @Size(max = 40) String species,
@@ -30,7 +28,6 @@ public final class AiDtos {
 
     public record PosterResponse(String headline, String description, boolean fromAi) {}
 
-    /** Datos del día para el resumen. */
     public record DaySummaryRequest(
             @NotBlank @Size(max = 60) String petName,
             @Size(max = 40) String species,

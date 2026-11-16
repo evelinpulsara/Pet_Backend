@@ -16,10 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-/**
- * Cliente de Google Gemini. La clave (GEMINI_API_KEY) vive solo en el servidor.
- * Prueba los modelos en orden: si uno está saturado o no existe, usa el siguiente.
- */
 @Component
 public class GeminiClient {
     private static final Logger log = LoggerFactory.getLogger(GeminiClient.class);
@@ -54,7 +50,6 @@ public class GeminiClient {
                 .header("x-goog-api-key", props.geminiApiKey());
     }
 
-    /** Texto de las partes de la respuesta (sin el "pensamiento" del modelo). */
     private String textOf(JsonNode root) {
         var sb = new StringBuilder();
         for (JsonNode p : root.path("candidates").path(0).path("content").path("parts")) {
@@ -63,7 +58,6 @@ public class GeminiClient {
         return sb.toString();
     }
 
-    /** Pide una respuesta completa. Vacío si ningún modelo respondió. */
     public Optional<String> generate(String prompt, boolean asJson) {
         if (!configured()) return Optional.empty();
         for (String model : props.geminiModels()) {
@@ -83,11 +77,6 @@ public class GeminiClient {
         return Optional.empty();
     }
 
-    /**
-     * Pide la respuesta por SSE (streamGenerateContent?alt=sse) y llama a
-     * [onText] con el texto acumulado cada vez que llega un pedazo.
-     * Devuelve true si llegó algo.
-     */
     public boolean stream(String prompt, Consumer<String> onText) {
         if (!configured()) return false;
         for (String model : props.geminiModels()) {
